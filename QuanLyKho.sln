@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "QuanLyKho.Model", "QuanLyKho.Model\QuanLyKho.Model.xproj", "{5CC19127-3229-4282-8FFF-80A1B5EF7441}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "QuanLyKho.Data", "QuanLyKho.Data\QuanLyKho.Data.xproj", "{361A1259-ED5A-4E0F-A92E-8FCE345135D9}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "QuanLyKho.Service", "QuanLyKho.Service\QuanLyKho.Service.xproj", "{98CD696C-0A9E-41B9-ADCF-1C58F894C6D0}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "QuanLyKho.WebCMS", "QuanLyKho.WebCMS\QuanLyKho.WebCMS.xproj", "{5F7E0988-8511-47E3-BC97-B4D3B1E8E81B}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "QuanLyKho.Common", "QuanLyKho.Common\QuanLyKho.Common.xproj", "{5C6301D1-4237-4D8F-80F8-E349697D135E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5CC19127-3229-4282-8FFF-80A1B5EF7441}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CC19127-3229-4282-8FFF-80A1B5EF7441}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CC19127-3229-4282-8FFF-80A1B5EF7441}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CC19127-3229-4282-8FFF-80A1B5EF7441}.Release|Any CPU.Build.0 = Release|Any CPU
+		{361A1259-ED5A-4E0F-A92E-8FCE345135D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{361A1259-ED5A-4E0F-A92E-8FCE345135D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{361A1259-ED5A-4E0F-A92E-8FCE345135D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{361A1259-ED5A-4E0F-A92E-8FCE345135D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98CD696C-0A9E-41B9-ADCF-1C58F894C6D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98CD696C-0A9E-41B9-ADCF-1C58F894C6D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98CD696C-0A9E-41B9-ADCF-1C58F894C6D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98CD696C-0A9E-41B9-ADCF-1C58F894C6D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F7E0988-8511-47E3-BC97-B4D3B1E8E81B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F7E0988-8511-47E3-BC97-B4D3B1E8E81B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F7E0988-8511-47E3-BC97-B4D3B1E8E81B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F7E0988-8511-47E3-BC97-B4D3B1E8E81B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C6301D1-4237-4D8F-80F8-E349697D135E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C6301D1-4237-4D8F-80F8-E349697D135E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C6301D1-4237-4D8F-80F8-E349697D135E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C6301D1-4237-4D8F-80F8-E349697D135E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
