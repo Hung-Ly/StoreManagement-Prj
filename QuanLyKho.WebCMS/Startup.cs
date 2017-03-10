@@ -23,7 +23,6 @@ namespace QuanLyKho.WebCMS
         private string sqlConnectionString = string.Empty;
 
         private bool useInMemoryProvider = false;
-        private IComponentContext container;
 
         // Using Autofac
         public IContainer ApplicationContainer { get; private set; }
@@ -110,11 +109,10 @@ namespace QuanLyKho.WebCMS
                 //// Register WebApi Controllers
                 //builder.regisRegisterApiControllers(Assembly.GetExecutingAssembly());
 
-                builder.RegisterAssemblyTypes(typeof(PostCategoryController).GetTypeInfo().Assembly)
-                    .Where(t => t.Name.EndsWith("Controller"))
-                    .PropertiesAutowired();
+                //builder.RegisterAssemblyTypes(typeof(PostCategoryController).GetTypeInfo().Assembly)
+                //    .Where(t => t.Name.EndsWith("Controller"))
+                //    .PropertiesAutowired();
 
-                builder.RegisterType<AppsDbContext>().AsSelf().InstancePerRequest();
 
                 builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
 
@@ -140,12 +138,12 @@ namespace QuanLyKho.WebCMS
                 // Repositories
                 builder.RegisterAssemblyTypes(typeof(PostCategoryRepository).GetTypeInfo().Assembly)
                     .Where(t => t.Name.EndsWith("Repository"))
-                    .AsImplementedInterfaces().InstancePerRequest();
+                    .AsImplementedInterfaces().InstancePerLifetimeScope();
 
                 // Services
                 builder.RegisterAssemblyTypes(typeof(PostCategoryService).GetTypeInfo().Assembly)
                    .Where(t => t.Name.EndsWith("Service"))
-                   .AsImplementedInterfaces().InstancePerRequest();
+                   .AsImplementedInterfaces().InstancePerLifetimeScope();
 
                 //Autofac.IContainer container = builder.Build();
                 //DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
@@ -157,10 +155,10 @@ namespace QuanLyKho.WebCMS
                 builder.Populate(services);
 
                 // Build the container.
-                container = builder.Build();
+                ApplicationContainer = builder.Build();
 
                 // Create and return the service provider.
-                return new AutofacServiceProvider(this.container);
+                return new AutofacServiceProvider(this.ApplicationContainer);
             }
             catch (Exception ex)
             {
