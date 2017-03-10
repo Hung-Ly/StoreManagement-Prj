@@ -8,8 +8,8 @@ using QuanLyKho.Data;
 namespace QuanLyKho.Data.Migrations
 {
     [DbContext(typeof(AppsDbContext))]
-    [Migration("20170309063851_initialDb_09032017")]
-    partial class initialDb_09032017
+    [Migration("20170309110849_initialDB")]
+    partial class initialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

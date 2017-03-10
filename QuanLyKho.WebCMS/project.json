@@ -26,7 +26,12 @@
     },
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0",
     "Microsoft.EntityFrameworkCore.Tools": "1.1.0-preview4-final",
-    "Microsoft.EntityFrameworkCore.InMemory": "1.1.0"
+    "Microsoft.EntityFrameworkCore.InMemory": "1.1.0",
+    "Autofac": "4.4.0",
+    "Autofac.Configuration": "4.0.1",
+    "AutoMapper": "5.2.0",
+    "Microsoft.AspNetCore.Owin": "1.1.1",
+    "Autofac.Extensions.DependencyInjection": "4.0.0"
   },
 
   "tools": {

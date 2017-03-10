@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using QuanLyKho.Data;
 using QuanLyKho.Data.Infrastructure;
+using QuanLyKho.Data.Repositories;
+using QuanLyKho.Service;
 using System;
+using System.Reflection;
 
 namespace QuanLyKho.WebCMS
 {
@@ -18,7 +23,10 @@ namespace QuanLyKho.WebCMS
 
         private bool useInMemoryProvider = false;
 
-        public IConfigurationRoot Configuration { get; }
+        // Using Autofac
+        public IContainer ApplicationContainer { get; private set; }
+
+        public IConfigurationRoot Configuration { get; private set; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -42,7 +50,9 @@ namespace QuanLyKho.WebCMS
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+
+        //Hung Ly - Added third-party Containner to MVC Core
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             //services.AddDbContext<AppsDbContext>(options =>
             //   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -65,22 +75,82 @@ namespace QuanLyKho.WebCMS
                             break;
 
                         default:
-                            //    options.UseSqlServer(sqlConnectionString,
-                            //b => b.MigrationsAssembly("QuanLyKho.Data"));
-                            options.UseSqlServer(sqlConnectionString);
+                            options.UseSqlServer(sqlConnectionString,
+                        b => b.MigrationsAssembly("QuanLyKho.Data"));
+                            //options.UseSqlServer(sqlConnectionString);
                             break;
                     }
                 });
 
                 services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
-                // Repositories
+                // Register all Repositories
 
                 //Enabling Cross-Origin Requests
                 services.AddCors();
 
-                // Add framework services.
-                services.AddMvc();
+                // ASP.NET Core docs for Autofac are here:
+                // http://autofac.readthedocs.io/en/latest/integration/aspnetcore.html
+
+                // Hung Ly - Controller as Services Add framework services.
+                services.AddMvc().AddControllersAsServices();
+
+                // Create the Autofac container builder.
+                var builder = new ContainerBuilder();
+                
+
+                builder.RegisterControllers(Assembly.GetExecutingAssembly());
+
+                //// Register your Web API controllers.
+                //// Register WebApi Controllers
+                //builder.regisRegisterApiControllers(Assembly.GetExecutingAssembly());
+                
+
+                builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
+
+                builder.RegisterType<AppsDbContext>().AsSelf().InstancePerRequest();
+
+                //Asp.net Identity
+                //builder.RegisterType<ApplicationUserStore>().As<IUserStore<ApplicationUser>>().InstancePerRequest();
+                //builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerRequest();
+                //builder.RegisterType<ApplicationSignInManager>().AsSelf().InstancePerRequest();
+                //builder.Register(c => HttpContext.Current.GetOwinContext().Authentication).InstancePerRequest();
+                //builder.Register(c => app.GetDataProtectionProvider()).InstancePerRequest();
+
+                
+                //var assemblies = Assembly.GetEntryAssembly().GetRattlesAssemblies();
+                ////.SelectMany(s => s.GetTypes())
+                ////        .Where(p => !p.IsAbstract && !p.IsInterface && p.IsClass); ;
+                //foreach (var assembly in assemblies)
+                //{
+                //    builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces();
+
+                //}
+
+                // Repositories
+                builder.RegisterAssemblyTypes(typeof(PostCategoryRepository).GetTypeInfo().Assembly)
+                    .Where(t => t.Name.EndsWith("Repository"))
+                    .AsImplementedInterfaces().InstancePerRequest();
+
+                // Services
+                builder.RegisterAssemblyTypes(typeof(PostCategoryService)GetTypeInfo().Assembly)
+                   .Where(t => t.Name.EndsWith("Service"))
+                   .AsImplementedInterfaces().InstancePerRequest();
+
+                Autofac.IContainer container = builder.Build();
+                DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
+                //Set the WebApi DependencyResolver
+                //GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver((IContainer)container);
+
+                // Populate the services.
+                builder.Populate(services);
+
+                // Build the container.
+                this.ApplicationContainer = builder.Build();
+
+                // Create and return the service provider.
+                return new AutofacServiceProvider(this.ApplicationContainer);
             }
             catch (Exception ex)
             {
@@ -98,6 +168,7 @@ namespace QuanLyKho.WebCMS
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
                 app.UseBrowserLink();
             }
             else
