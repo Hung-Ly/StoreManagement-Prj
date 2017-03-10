@@ -23,13 +23,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <body>
     @Html.Partial("Client/Header");
     <!---->
-    <div class="container body-content row">
+    <div>
         <div>
             @* left menu *@
             @Html.Partial("Client/Category");
+            @RenderBody()
         </div>
-        <!---->
-        @RenderBody()
+        <!---->        
     </div>
     <!---->
     @Html.Partial("Client/Footer");
