@@ -38,7 +38,7 @@ namespace QuanLyKho.Service
                 }
                 return order;
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
