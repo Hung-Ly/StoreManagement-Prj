@@ -12,6 +12,7 @@ using QuanLyKho.Data.Repositories;
 using QuanLyKho.Service;
 using System;
 using System.Reflection;
+using QuanLyKho.WebCMS.Api;
 
 namespace QuanLyKho.WebCMS
 {
@@ -22,6 +23,7 @@ namespace QuanLyKho.WebCMS
         private string sqlConnectionString = string.Empty;
 
         private bool useInMemoryProvider = false;
+        private IComponentContext container;
 
         // Using Autofac
         public IContainer ApplicationContainer { get; private set; }
@@ -97,14 +99,22 @@ namespace QuanLyKho.WebCMS
 
                 // Create the Autofac container builder.
                 var builder = new ContainerBuilder();
-                
 
-                builder.RegisterControllers(Assembly.GetExecutingAssembly());
+
+                //builder.RegisterControllers(Assembly.GetExecutingAssembly());
+                builder.RegisterAssemblyTypes(Assembly.GetEntryAssembly());
 
                 //// Register your Web API controllers.
+
+
                 //// Register WebApi Controllers
                 //builder.regisRegisterApiControllers(Assembly.GetExecutingAssembly());
-                
+
+                builder.RegisterAssemblyTypes(typeof(PostCategoryController).GetTypeInfo().Assembly)
+                    .Where(t => t.Name.EndsWith("Controller"))
+                    .PropertiesAutowired();
+
+                builder.RegisterType<AppsDbContext>().AsSelf().InstancePerRequest();
 
                 builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
 
@@ -133,12 +143,12 @@ namespace QuanLyKho.WebCMS
                     .AsImplementedInterfaces().InstancePerRequest();
 
                 // Services
-                builder.RegisterAssemblyTypes(typeof(PostCategoryService)GetTypeInfo().Assembly)
+                builder.RegisterAssemblyTypes(typeof(PostCategoryService).GetTypeInfo().Assembly)
                    .Where(t => t.Name.EndsWith("Service"))
                    .AsImplementedInterfaces().InstancePerRequest();
 
-                Autofac.IContainer container = builder.Build();
-                DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+                //Autofac.IContainer container = builder.Build();
+                //DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
                 //Set the WebApi DependencyResolver
                 //GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver((IContainer)container);
@@ -147,10 +157,10 @@ namespace QuanLyKho.WebCMS
                 builder.Populate(services);
 
                 // Build the container.
-                this.ApplicationContainer = builder.Build();
+                container = builder.Build();
 
                 // Create and return the service provider.
-                return new AutofacServiceProvider(this.ApplicationContainer);
+                return new AutofacServiceProvider(this.container);
             }
             catch (Exception ex)
             {
