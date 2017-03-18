@@ -1,11 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using QuanLyKho.Model.Models;
+using QuanLyKho.Model.Entities;
 using System.Linq;
 
 namespace QuanLyKho.Data
 {
-    public class AppsDbContext : DbContext
+    // inUse DbContext without Identity
+    //public class AppsDbContext : DbContext
+
+    // use IdentityDbContext
+    public class AppsDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<ContactDetail> ContactDetails { get; set; }
         public DbSet<Error> Errors { get; set; }
@@ -50,6 +55,8 @@ namespace QuanLyKho.Data
 
             modelBuilder.Entity<OrderDetail>()
                 .HasKey(c => new { c.OrderID, c.ProductID });
+            
+            // Identity
         }
     }
 }

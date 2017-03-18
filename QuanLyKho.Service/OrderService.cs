@@ -1,7 +1,6 @@
 ﻿using QuanLyKho.Data.Infrastructure;
 using QuanLyKho.Data.Repositories;
-using QuanLyKho.Model.Models;
-using System;
+using QuanLyKho.Model.Entities;
 using System.Collections.Generic;
 
 namespace QuanLyKho.Service
@@ -9,14 +8,17 @@ namespace QuanLyKho.Service
     public interface IOrderService
     {
         Order Create(ref Order order, List<OrderDetail> orderDetails);
+
         void UpdateStatus(int orderId);
+
         void Save();
     }
+
     public class OrderService : IOrderService
     {
-        IOrderRepository _orderRepository;
-        IOrderDetailRepository _orderDetailRepository;
-        IUnitOfWork _unitOfWork;
+        private IOrderRepository _orderRepository;
+        private IOrderDetailRepository _orderDetailRepository;
+        private IUnitOfWork _unitOfWork;
 
         public OrderService(IOrderRepository orderRepository, IOrderDetailRepository orderDetailRepository, IUnitOfWork unitOfWork)
         {
@@ -24,6 +26,7 @@ namespace QuanLyKho.Service
             this._orderDetailRepository = orderDetailRepository;
             this._unitOfWork = unitOfWork;
         }
+
         public Order Create(ref Order order, List<OrderDetail> orderDetails)
         {
             try

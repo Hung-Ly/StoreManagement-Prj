@@ -5,7 +5,6 @@ define( [
 	"../var/rnotwhite",
 	"../selector"
 ], function( jQuery, access, support, rnotwhite ) {
-
 var boolHook,
 	attrHandle = jQuery.expr.attrHandle;
 
@@ -96,7 +95,6 @@ jQuery.extend( {
 
 				// Boolean attributes get special treatment (#10870)
 				if ( jQuery.expr.match.bool.test( name ) ) {
-
 					// Set corresponding property to false
 					elem[ propName ] = false;
 				}
@@ -111,7 +109,6 @@ jQuery.extend( {
 boolHook = {
 	set: function( elem, value, name ) {
 		if ( value === false ) {
-
 			// Remove boolean attributes when set to false
 			jQuery.removeAttr( elem, name );
 		} else {
@@ -126,7 +123,6 @@ jQuery.each( jQuery.expr.match.bool.source.match( /\w+/g ), function( i, name ) 
 	attrHandle[ name ] = function( elem, name, isXML ) {
 		var ret, handle;
 		if ( !isXML ) {
-
 			// Avoid an infinite loop by temporarily removing this function from the getter
 			handle = attrHandle[ name ];
 			attrHandle[ name ] = ret;
@@ -138,5 +134,4 @@ jQuery.each( jQuery.expr.match.bool.source.match( /\w+/g ), function( i, name ) 
 		return ret;
 	};
 } );
-
 } );

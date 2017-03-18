@@ -1,6 +1,6 @@
 ﻿using QuanLyKho.Data.Infrastructure;
 
-using QuanLyKho.Model.Models;
+using QuanLyKho.Model.Entities;
 
 namespace QuanLyKho.Data.Repositories
 {

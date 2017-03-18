@@ -1,4 +1,4 @@
-define( [
+define([
 	"./core",
 	"./selector",
 	"./traversing",
@@ -30,8 +30,6 @@ define( [
 	"./dimensions",
 	"./deprecated",
 	"./exports/amd"
-], function( jQuery ) {
-
-return ( window.jQuery = window.$ = jQuery );
-
-} );
+], function (jQuery) {
+    return (window.jQuery = window.$ = jQuery);
+});

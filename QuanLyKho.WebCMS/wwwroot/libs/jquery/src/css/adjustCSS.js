@@ -2,7 +2,6 @@ define( [
 	"../core",
 	"../var/rcssNum"
 ], function( jQuery, rcssNum ) {
-
 function adjustCSS( elem, prop, valueParts, tween ) {
 	var adjusted,
 		scale = 1,
@@ -18,7 +17,6 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 			rcssNum.exec( jQuery.css( elem, prop ) );
 
 	if ( initialInUnit && initialInUnit[ 3 ] !== unit ) {
-
 		// Trust units reported by jQuery.css
 		unit = unit || initialInUnit[ 3 ];
 
@@ -29,7 +27,6 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 		initialInUnit = +initial || 1;
 
 		do {
-
 			// If previous iteration zeroed out, double until we get *something*.
 			// Use string for doubling so we don't accidentally see scale as unchanged below
 			scale = scale || ".5";

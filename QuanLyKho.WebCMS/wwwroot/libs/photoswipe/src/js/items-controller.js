@@ -1,7 +1,7 @@
 /**
 *
 * Controller manages gallery items, their dimensions, and their content.
-* 
+*
 */
 
 var _items,
@@ -19,14 +19,13 @@ var _items,
 		}
 	};
 
-
 var _getItemAt,
 	_getNumItems,
 	_initialIsLoop,
 	_getZeroBounds = function() {
 		return {
-			center:{x:0,y:0}, 
-			max:{x:0,y:0}, 
+			center:{x:0,y:0},
+			max:{x:0,y:0},
 			min:{x:0,y:0}
 		};
 	},
@@ -38,23 +37,22 @@ var _getItemAt,
 		bounds.center.y = Math.round((_tempPanAreaSize.y - realPanElementH) / 2) + item.vGap.top;
 
 		// maximum pan position
-		bounds.max.x = (realPanElementW > _tempPanAreaSize.x) ? 
-							Math.round(_tempPanAreaSize.x - realPanElementW) : 
+		bounds.max.x = (realPanElementW > _tempPanAreaSize.x) ?
+							Math.round(_tempPanAreaSize.x - realPanElementW) :
 							bounds.center.x;
-		
-		bounds.max.y = (realPanElementH > _tempPanAreaSize.y) ? 
-							Math.round(_tempPanAreaSize.y - realPanElementH) + item.vGap.top : 
+
+		bounds.max.y = (realPanElementH > _tempPanAreaSize.y) ?
+							Math.round(_tempPanAreaSize.y - realPanElementH) + item.vGap.top :
 							bounds.center.y;
-		
+
 		// minimum pan position
 		bounds.min.x = (realPanElementW > _tempPanAreaSize.x) ? 0 : bounds.center.x;
 		bounds.min.y = (realPanElementH > _tempPanAreaSize.y) ? item.vGap.top : bounds.center.y;
 	},
 	_calculateItemSize = function(item, viewportSize, zoomLevel) {
-
 		if (item.src && !item.loadError) {
 			var isInitial = !zoomLevel;
-			
+
 			if(isInitial) {
 				if(!item.vGap) {
 					item.vGap = {top:0,bottom:0};
@@ -62,7 +60,6 @@ var _getItemAt,
 				// allows overriding vertical margin for individual items
 				_shout('parseVerticalMargin', item);
 			}
-
 
 			_tempPanAreaSize.x = viewportSize.x;
 			_tempPanAreaSize.y = viewportSize.y - item.vGap.top - item.vGap.bottom;
@@ -87,10 +84,10 @@ var _getItemAt,
 				}
 
 				item.initialZoomLevel = zoomLevel;
-				
+
 				if(!item.bounds) {
 					// reuse bounds object
-					item.bounds = _getZeroBounds(); 
+					item.bounds = _getZeroBounds();
 				}
 			}
 
@@ -114,24 +111,17 @@ var _getItemAt,
 			// if it's not image, we return zero bounds (content is not zoomable)
 			return item.bounds;
 		}
-		
 	},
 
-	
-
-
 	_appendImage = function(index, item, baseDiv, img, preventAnimation, keepPlaceholder) {
-		
-
 		if(item.loadError) {
 			return;
 		}
 
 		if(img) {
-
 			item.imageAppended = true;
 			_setImageSize(item, img, (item === self.currItem && _renderMaxResolution) );
-			
+
 			baseDiv.appendChild(img);
 
 			if(keepPlaceholder) {
@@ -144,8 +134,6 @@ var _getItemAt,
 			}
 		}
 	},
-	
-
 
 	_preloadImage = function(item) {
 		item.loading = true;
@@ -167,7 +155,7 @@ var _getItemAt,
 		img.onerror = function() {
 			item.loadError = true;
 			onComplete();
-		};		
+		};
 
 		img.src = item.src;// + '?a=' + Math.random();
 
@@ -175,14 +163,12 @@ var _getItemAt,
 	},
 	_checkForError = function(item, cleanUp) {
 		if(item.src && item.loadError && item.container) {
-
 			if(cleanUp) {
 				item.container.innerHTML = '';
 			}
 
 			item.container.innerHTML = _options.errorMsg.replace('%url%',  item.src );
 			return true;
-			
 		}
 	},
 	_setImageSize = function(item, img, maxRes) {
@@ -196,7 +182,7 @@ var _getItemAt,
 
 		var w = maxRes ? item.w : Math.round(item.w * item.fitRatio),
 			h = maxRes ? item.h : Math.round(item.h * item.fitRatio);
-		
+
 		if(item.placeholder && !item.loaded) {
 			item.placeholder.style.width = w + 'px';
 			item.placeholder.style.height = h + 'px';
@@ -206,7 +192,6 @@ var _getItemAt,
 		img.style.height = h + 'px';
 	},
 	_appendImagesPool = function() {
-
 		if(_imagesToAppendPool.length) {
 			var poolItem;
 
@@ -219,13 +204,9 @@ var _getItemAt,
 			_imagesToAppendPool = [];
 		}
 	};
-	
-
 
 _registerModule('Controller', {
-
 	publicMethods: {
-
 		lazyLoadItem: function(index) {
 			index = _getLoopedId(index);
 			var item = _getItemAt(index);
@@ -248,21 +229,17 @@ _registerModule('Controller', {
 			_getItemAt = self.getItemAt;
 			_getNumItems = _options.getNumItemsFn; //self.getNumItems;
 
-
-
 			_initialIsLoop = _options.loop;
 			if(_getNumItems() < 3) {
 				_options.loop = false; // disable loop if less then 3 items
 			}
 
 			_listen('beforeChange', function(diff) {
-
 				var p = _options.preload,
 					isNext = diff === null ? true : (diff >= 0),
 					preloadBefore = Math.min(p[0], _getNumItems() ),
 					preloadAfter = Math.min(p[1], _getNumItems() ),
 					i;
-
 
 				for(i = 1; i <= (isNext ? preloadAfter : preloadBefore); i++) {
 					self.lazyLoadItem(_currentItemIndex+i);
@@ -279,15 +256,13 @@ _registerModule('Controller', {
 			_listen('mainScrollAnimComplete', _appendImagesPool);
 			_listen('initialZoomInEnd', _appendImagesPool);
 
-
-
 			_listen('destroy', function() {
 				var item;
 				for(var i = 0; i < _items.length; i++) {
 					item = _items[i];
 					// remove reference to DOM elements, for GC
 					if(item.container) {
-						item.container = null; 
+						item.container = null;
 					}
 					if(item.placeholder) {
 						item.placeholder = null;
@@ -306,7 +281,6 @@ _registerModule('Controller', {
 			});
 		},
 
-
 		getItemAt: function(index) {
 			if (index >= 0) {
 				return _items[index] !== undefined ? _items[index] : false;
@@ -315,22 +289,21 @@ _registerModule('Controller', {
 		},
 
 		allowProgressiveImg: function() {
-			// 1. Progressive image loading isn't working on webkit/blink 
+			// 1. Progressive image loading isn't working on webkit/blink
 			//    when hw-acceleration (e.g. translateZ) is applied to IMG element.
 			//    That's why in PhotoSwipe parent element gets zoom transform, not image itself.
-			//    
+			//
 			// 2. Progressive image loading sometimes blinks in webkit/blink when applying animation to parent element.
 			//    That's why it's disabled on touch devices (mainly because of swipe transition)
-			//    
+			//
 			// 3. Progressive image loading sometimes doesn't work in IE (up to 11).
 
 			// Don't allow progressive loading on non-large touch devices
-			return _options.forceProgressiveLoading || !_likelyTouchDevice || _options.mouseUsed || screen.width > 1200; 
+			return _options.forceProgressiveLoading || !_likelyTouchDevice || _options.mouseUsed || screen.width > 1200;
 			// 1200 - to eliminate touch devices with large screen (like Chromebook Pixel)
 		},
 
 		setContent: function(holder, index) {
-
 			if(_options.loop) {
 				index = _getLoopedId(index);
 			}
@@ -339,10 +312,10 @@ _registerModule('Controller', {
 			if(prevItem) {
 				prevItem.container = null;
 			}
-	
+
 			var item = self.getItemAt(index),
 				img;
-			
+
 			if(!item) {
 				holder.el.innerHTML = '';
 				return;
@@ -355,9 +328,7 @@ _registerModule('Controller', {
 			holder.item = item;
 
 			// base container DIV is created only once for each of 3 holders
-			var baseDiv = item.container = framework.createEl('pswp__zoom-wrap'); 
-
-			
+			var baseDiv = item.container = framework.createEl('pswp__zoom-wrap');
 
 			if(!item.src && item.html) {
 				if(item.html.tagName) {
@@ -370,11 +341,9 @@ _registerModule('Controller', {
 			_checkForError(item);
 
 			_calculateItemSize(item, _viewportSize);
-			
+
 			if(item.src && !item.loadError && !item.loaded) {
-
 				item.loadComplete = function(item) {
-
 					// gallery closed before image finished loading
 					if(!_isOpen) {
 						return;
@@ -422,45 +391,38 @@ _registerModule('Controller', {
 				};
 
 				if(framework.features.transform) {
-					
-					var placeholderClassName = 'pswp__img pswp__img--placeholder'; 
+					var placeholderClassName = 'pswp__img pswp__img--placeholder';
 					placeholderClassName += (item.msrc ? '' : ' pswp__img--placeholder--blank');
 
 					var placeholder = framework.createEl(placeholderClassName, item.msrc ? 'img' : '');
 					if(item.msrc) {
 						placeholder.src = item.msrc;
 					}
-					
+
 					_setImageSize(item, placeholder);
 
 					baseDiv.appendChild(placeholder);
 					item.placeholder = placeholder;
-
 				}
-				
-
-				
 
 				if(!item.loading) {
 					_preloadImage(item);
 				}
 
-
 				if( self.allowProgressiveImg() ) {
 					// just append image
 					if(!_initialContentSet && _features.transform) {
 						_imagesToAppendPool.push({
-							item:item, 
-							baseDiv:baseDiv, 
-							img:item.img, 
-							index:index, 
+							item:item,
+							baseDiv:baseDiv,
+							img:item.img,
+							index:index,
 							holder:holder
 						});
 					} else {
 						_appendImage(index, item, baseDiv, item.img, true, true);
 					}
 				}
-				
 			} else if(item.src && !item.loadError) {
 				// image object is created every time, due to bugs of image loading & delay when switching images
 				img = framework.createEl('pswp__img', 'img');
@@ -469,7 +431,6 @@ _registerModule('Controller', {
 				_setImageSize(item, img);
 				_appendImage(index, item, baseDiv, img, true);
 			}
-			
 
 			if(!_initialContentSet && index === _currentItemIndex) {
 				_currZoomElementStyle = baseDiv.style;
@@ -488,6 +449,5 @@ _registerModule('Controller', {
 			}
 			item.loaded = item.loading = item.img = item.imageAppended = false;
 		}
-
 	}
 });

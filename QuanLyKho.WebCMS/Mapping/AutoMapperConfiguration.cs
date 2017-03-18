@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using QuanLyKho.Model.Models;
-using QuanLyKho.Web.ViewModel;
-using QuanLyKho.WebCMS.ViewModel;
+using QuanLyKho.Model.Entities;
+using QuanLyKho.WebCMS.Models;
+using QuanLyKho.WebCMS.Models.AccountViewModels;
 
 namespace QuanLyKho.WebCMS.Mapping
 {
@@ -20,6 +20,8 @@ namespace QuanLyKho.WebCMS.Mapping
                 cfg.CreateMap<Footer, FooterViewModel>();
                 cfg.CreateMap<Slide, SlideViewModel>();
                 cfg.CreateMap<Page, PageViewModel>();
+
+                cfg.CreateMap<ApplicationUser, LoginViewModel>();
             });
         }
     }

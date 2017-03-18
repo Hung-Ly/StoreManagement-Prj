@@ -1,10 +1,7 @@
 ﻿using QuanLyKho.Data.Infrastructure;
 using QuanLyKho.Data.Repositories;
-using QuanLyKho.Model.Models;
-using System;
+using QuanLyKho.Model.Entities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace QuanLyKho.Service
 {
@@ -40,12 +37,12 @@ namespace QuanLyKho.Service
 
         public void Add(ProductCategory ProductCategory)
         {
-             _ProductCategoryRepository.Add(ProductCategory);
+            _ProductCategoryRepository.Add(ProductCategory);
         }
 
         public void Delete(int id)
         {
-             _ProductCategoryRepository.Delete(id);
+            _ProductCategoryRepository.Delete(id);
         }
 
         public IEnumerable<ProductCategory> GetAll()
@@ -59,7 +56,6 @@ namespace QuanLyKho.Service
                 return _ProductCategoryRepository.GetMulti(x => x.Name.Contains(keyword) || x.Description.Contains(keyword));
             else
                 return _ProductCategoryRepository.GetAll();
-
         }
 
         public IEnumerable<ProductCategory> GetAllByParentId(int parentId)

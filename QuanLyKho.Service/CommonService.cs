@@ -1,7 +1,7 @@
 ﻿using QuanLyKho.Common;
 using QuanLyKho.Data.Infrastructure;
 using QuanLyKho.Data.Repositories;
-using QuanLyKho.Model.Models;
+using QuanLyKho.Model.Entities;
 using System.Collections.Generic;
 
 namespace QuanLyKho.Service

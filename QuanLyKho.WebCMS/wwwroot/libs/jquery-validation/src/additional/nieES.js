@@ -30,5 +30,4 @@ $.validator.addMethod( "nieES", function( value ) {
 	}
 
 	return false;
-
 }, "Please specify a valid NIE number." );

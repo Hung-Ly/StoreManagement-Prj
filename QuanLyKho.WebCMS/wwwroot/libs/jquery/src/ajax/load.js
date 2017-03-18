@@ -9,7 +9,6 @@ define( [
 	// Optional event/alias dependency
 	"../event/alias"
 ], function( jQuery ) {
-
 // Keep a copy of the old load method
 var _load = jQuery.fn.load;
 
@@ -32,7 +31,6 @@ jQuery.fn.load = function( url, params, callback ) {
 
 	// If it's a function
 	if ( jQuery.isFunction( params ) ) {
-
 		// We assume that it's the callback
 		callback = params;
 		params = undefined;
@@ -54,7 +52,6 @@ jQuery.fn.load = function( url, params, callback ) {
 			dataType: "html",
 			data: params
 		} ).done( function( responseText ) {
-
 			// Save response for use in complete callback
 			response = arguments;
 
@@ -79,5 +76,4 @@ jQuery.fn.load = function( url, params, callback ) {
 
 	return this;
 };
-
 } );

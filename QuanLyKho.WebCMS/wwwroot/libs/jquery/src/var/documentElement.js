@@ -1,5 +1,5 @@
-define( [
+define([
 	"./document"
-], function( document ) {
-	return document.documentElement;
-} );
+], function (document) {
+    return document.documentElement;
+});

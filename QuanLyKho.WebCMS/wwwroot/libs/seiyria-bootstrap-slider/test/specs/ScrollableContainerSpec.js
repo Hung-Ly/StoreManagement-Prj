@@ -22,7 +22,6 @@ describe("Scrollable test", function() {
             var sliderHandleBoundingBoxInfo = sliderHandleEl.getBoundingClientRect();
             sliderHandleTopPos = sliderHandleBoundingBoxInfo.top;
             sliderHandleLeftPos = sliderHandleBoundingBoxInfo.left;
-
         });
 
         afterEach(function() {
@@ -81,5 +80,4 @@ describe("Scrollable test", function() {
             expect(newSliderValue).toEqual(14);
         });
     });
-
 }); // End of spec

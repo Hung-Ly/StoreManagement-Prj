@@ -1,34 +1,33 @@
-describe("refresh() Method Tests", function() {
-  var testSlider;
+describe("refresh() Method Tests", function () {
+    var testSlider;
 
-  afterEach(function() {
-    if(testSlider) {
-      testSlider.destroy();
-    }
-  });
-
-  it("does not convert a non-range slider into a range slider when invoked", function() {
-  	// Initialize non-range slider
-  	testSlider = new Slider("#testSlider1", {
-      min: 0,
-      max: 10,
-      value: 5
+    afterEach(function () {
+        if (testSlider) {
+            testSlider.destroy();
+        }
     });
 
-    // Assert that slider is non-range slider
-    var initialValue = testSlider.getValue();
-    var sliderIsRangeValue = initialValue instanceof Array;
+    it("does not convert a non-range slider into a range slider when invoked", function () {
+        // Initialize non-range slider
+        testSlider = new Slider("#testSlider1", {
+            min: 0,
+            max: 10,
+            value: 5
+        });
 
-    expect(sliderIsRangeValue).toBeFalsy();
+        // Assert that slider is non-range slider
+        var initialValue = testSlider.getValue();
+        var sliderIsRangeValue = initialValue instanceof Array;
 
-    // Invoke refresh() method
-    testSlider.refresh();
+        expect(sliderIsRangeValue).toBeFalsy();
 
-    // Assert that slider remains a non-range slider
-    var afterRefreshValue = testSlider.getValue();
-    sliderIsRangeValue = afterRefreshValue instanceof Array;
+        // Invoke refresh() method
+        testSlider.refresh();
 
-    expect(sliderIsRangeValue).toBeFalsy();
-  });
+        // Assert that slider remains a non-range slider
+        var afterRefreshValue = testSlider.getValue();
+        sliderIsRangeValue = afterRefreshValue instanceof Array;
 
+        expect(sliderIsRangeValue).toBeFalsy();
+    });
 }); // End of spec

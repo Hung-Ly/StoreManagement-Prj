@@ -1,7 +1,6 @@
 define( [
 	"../core"
 ], function( jQuery ) {
-
 // Multifunctional method to get and set values of a collection
 // The value/s can optionally be executed if it's a function
 var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
@@ -25,7 +24,6 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 		}
 
 		if ( bulk ) {
-
 			// Bulk operations run against the entire set
 			if ( raw ) {
 				fn.call( elems, value );
@@ -61,5 +59,4 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 };
 
 return access;
-
 } );

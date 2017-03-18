@@ -16,7 +16,7 @@ namespace QuanLyKho.Model.Abstract
         public DateTime? UpdatedDate { get; set; }
 
         [MaxLength(250)]
-        public string MetaKeyWord { get; set; }
+        public string MetaKeyword { get; set; }
 
         [MaxLength(250)]
         public string MetaDescription { get; set; }

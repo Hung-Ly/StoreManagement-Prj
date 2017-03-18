@@ -4,8 +4,6 @@
 //--------------------------------------------------
 //--------------------------------------------------
 
-
-
 describe("'off()' test", function() {
     var testSlider, eventHandlerTriggered, mouse;
 
@@ -13,12 +11,10 @@ describe("'off()' test", function() {
         eventHandlerTriggered = true;
     };
 
-
     beforeEach(function() {
         eventHandlerTriggered = false;
         mouse = document.createEvent('MouseEvents');
     });
-
 
     it("should properly unbind an event listener", function() {
         testSlider = $("#testSlider1").slider();

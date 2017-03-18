@@ -10,7 +10,6 @@
   This will help ensure that they are accounted for and do not arise again.
 */
 describe("Conflicting Options Tests", function() {
-
   var testSlider;
 
   it("Should have the value zero when it is slided to zero", function() {
@@ -69,5 +68,4 @@ describe("Conflicting Options Tests", function() {
       testSlider = null;
     }
   });
-
 });

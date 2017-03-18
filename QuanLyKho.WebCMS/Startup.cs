@@ -1,7 +1,8 @@
 ﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,10 +10,13 @@ using Microsoft.Extensions.Logging;
 using QuanLyKho.Data;
 using QuanLyKho.Data.Infrastructure;
 using QuanLyKho.Data.Repositories;
+using QuanLyKho.Model.Entities;
 using QuanLyKho.Service;
 using System;
 using System.Reflection;
-using QuanLyKho.WebCMS.Api;
+using AutoMapper;
+using Autofac.Extensions.DependencyInjection;
+using QuanLyKho.WebCMS.Mapping;
 
 namespace QuanLyKho.WebCMS
 {
@@ -32,21 +36,26 @@ namespace QuanLyKho.WebCMS
         public Startup(IHostingEnvironment env)
         {
             _applicationPath = env.WebRootPath;
+
             // Setup configuration sources.
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            // Will delete when apps release :-)
 
             if (env.IsDevelopment())
             {
                 // This reads the configuration keys from the secret store.
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                //builder.AddUserSecrets();
+                builder.AddUserSecrets();
+
+                builder.AddApplicationInsightsSettings(developerMode: true);
             }
 
+            builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
@@ -78,62 +87,54 @@ namespace QuanLyKho.WebCMS
                         default:
                             options.UseSqlServer(sqlConnectionString,
                         b => b.MigrationsAssembly("QuanLyKho.Data"));
-                            //options.UseSqlServer(sqlConnectionString);
                             break;
                     }
                 });
 
-                services.AddSingleton<IUnitOfWork, UnitOfWork>();
+                // HTTPS Protocol
+
+                //services.Configure<MvcOptions>(options =>
+                //{
+                //    options.Filters.Add(new RequireHttpsAttribute());
+                //});
 
                 // Register all Repositories
 
                 //Enabling Cross-Origin Requests
                 services.AddCors();
 
+
+                AutoMapperConfiguration.Configuration();
+
                 // ASP.NET Core docs for Autofac are here:
                 // http://autofac.readthedocs.io/en/latest/integration/aspnetcore.html
 
+                // Add Identity Framework
+                services.AddIdentity<ApplicationUser, IdentityRole>()
+                        .AddEntityFrameworkStores<AppsDbContext>()
+                        .AddDefaultTokenProviders();
+
+                services.AddScoped<SignInManager<ApplicationUser>, SignInManager<ApplicationUser>>();
+
                 // Hung Ly - Controller as Services Add framework services.
                 services.AddMvc().AddControllersAsServices();
+               // services.AddAutoMapper();
+
+                services.AddSingleton<IUnitOfWork, UnitOfWork>();
+
+                // Add application services for IEmail & ISmsSender
+                services.AddTransient<IEmailSender, AuthMessageSender>();
+                services.AddTransient<ISmsSender, AuthMessageSender>();
 
                 // Create the Autofac container builder.
                 var builder = new ContainerBuilder();
 
-
                 //builder.RegisterControllers(Assembly.GetExecutingAssembly());
                 builder.RegisterAssemblyTypes(Assembly.GetEntryAssembly());
-
-                //// Register your Web API controllers.
-
-
-                //// Register WebApi Controllers
-                //builder.regisRegisterApiControllers(Assembly.GetExecutingAssembly());
-
-                //builder.RegisterAssemblyTypes(typeof(PostCategoryController).GetTypeInfo().Assembly)
-                //    .Where(t => t.Name.EndsWith("Controller"))
-                //    .PropertiesAutowired();
-
 
                 builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
 
                 builder.RegisterType<AppsDbContext>().AsSelf().InstancePerRequest();
-
-                //Asp.net Identity
-                //builder.RegisterType<ApplicationUserStore>().As<IUserStore<ApplicationUser>>().InstancePerRequest();
-                //builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerRequest();
-                //builder.RegisterType<ApplicationSignInManager>().AsSelf().InstancePerRequest();
-                //builder.Register(c => HttpContext.Current.GetOwinContext().Authentication).InstancePerRequest();
-                //builder.Register(c => app.GetDataProtectionProvider()).InstancePerRequest();
-
-                
-                //var assemblies = Assembly.GetEntryAssembly().GetRattlesAssemblies();
-                ////.SelectMany(s => s.GetTypes())
-                ////        .Where(p => !p.IsAbstract && !p.IsInterface && p.IsClass); ;
-                //foreach (var assembly in assemblies)
-                //{
-                //    builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces();
-
-                //}
 
                 // Repositories
                 builder.RegisterAssemblyTypes(typeof(PostCategoryRepository).GetTypeInfo().Assembly)
@@ -168,7 +169,7 @@ namespace QuanLyKho.WebCMS
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, AppsDbContext context)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -177,6 +178,7 @@ namespace QuanLyKho.WebCMS
             {
                 app.UseDeveloperExceptionPage();
 
+                // dbContext.Database.Migrate(); //this will generate the db if it does not exist
                 app.UseBrowserLink();
             }
             else
@@ -192,6 +194,9 @@ namespace QuanLyKho.WebCMS
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            // Seefing base data into database
+            SeedData.Initialize(context);
         }
     }
 }

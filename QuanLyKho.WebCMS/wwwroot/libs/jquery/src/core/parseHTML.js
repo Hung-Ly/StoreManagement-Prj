@@ -4,7 +4,6 @@ define( [
 	"./var/rsingleTag",
 	"../manipulation/buildFragment"
 ], function( jQuery, document, rsingleTag, buildFragment ) {
-
 // Argument "data" should be string of html
 // context (optional): If specified, the fragment will be created in this context,
 // defaults to document
@@ -37,5 +36,4 @@ jQuery.parseHTML = function( data, context, keepScripts ) {
 };
 
 return jQuery.parseHTML;
-
 } );

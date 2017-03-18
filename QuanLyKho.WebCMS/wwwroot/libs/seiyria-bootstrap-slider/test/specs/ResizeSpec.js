@@ -10,7 +10,6 @@ describe("Resize Tests", function() {
   });
 
   describe("Tick Labels", function() {
-
     var $el, options;
 
     beforeEach(function() {
@@ -22,7 +21,6 @@ describe("Resize Tests", function() {
     });
 
     it("should resize the tick labels when horizontal", function() {
-
       $el = $("#resizeSlider");
       testSlider = $el.slider(options);
       dataSlider = testSlider.data('slider');
@@ -45,7 +43,6 @@ describe("Resize Tests", function() {
     });
 
     it('should resize the tick labels when vertical', function() {
-
       var $el = $("#resizeSliderVertical");
       testSlider = $el.slider(options);
       dataSlider = testSlider.data('slider');

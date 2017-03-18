@@ -1,16 +1,16 @@
 ﻿using QuanLyKho.Data.Repositories;
-using System.Collections.Generic;
 
 namespace QuanLyKho.Service
 {
     public interface IStatisticService
     {
         //IEnumerable<RevenueStatisticViewModel> GetRevenueStatistic(string fromDate, string toDate);
-
     }
+
     public class StatisticService : IStatisticService
     {
-        IOrderRepository _orderRepository;
+        private IOrderRepository _orderRepository;
+
         public StatisticService(IOrderRepository orderRepository)
         {
             _orderRepository = orderRepository;

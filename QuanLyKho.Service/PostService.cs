@@ -1,6 +1,6 @@
 ﻿using QuanLyKho.Data.Infrastructure;
 using QuanLyKho.Data.Repositories;
-using QuanLyKho.Model.Models;
+using QuanLyKho.Model.Entities;
 using System;
 using System.Collections.Generic;
 
@@ -29,8 +29,8 @@ namespace QuanLyKho.Service
 
     public class PostService : IPostService
     {
-        IPostRepository _postRepository;
-        IUnitOfWork _unitOfWork;
+        private IPostRepository _postRepository;
+        private IUnitOfWork _unitOfWork;
 
         public PostService(IPostRepository postRepository, IUnitOfWork unitOfWork)
         {
@@ -63,7 +63,6 @@ namespace QuanLyKho.Service
             //TODO: Select all post by tag
             //return _postRepository.GetAllByTag(tag, page, pageSize, out totalRow);
             throw new NotImplementedException();
-
         }
 
         public IEnumerable<Post> GetAllPaging(int page, int pageSize, out int totalRow)

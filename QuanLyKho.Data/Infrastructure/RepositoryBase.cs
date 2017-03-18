@@ -18,16 +18,11 @@ namespace QuanLyKho.Data.Infrastructure
 
         public RepositoryBase(AppsDbContext context)
         {
-            //if (_context != null)
-            //{
-
-                _context = context;
-            //}
-            //else
-            //{
-            //    throw new ArgumentNullException("Context");
-            //}
-         
+            _context = context;
+            if (_context == null)
+            {
+                throw new ArgumentNullException("Context");
+            }
             // Hung Ly
             //entities = context.Set<T>();
         }

@@ -12,7 +12,7 @@ namespace QuanLyKho.Model.Abstract
 
         DateTime? UpdatedDate { get; set; }
 
-        string MetaKeyWord { get; set; }
+        string MetaKeyword { get; set; }
 
         string MetaDescription { get; set; }
 

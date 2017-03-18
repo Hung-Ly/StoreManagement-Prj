@@ -4,7 +4,6 @@ define( [
 	"./support",
 	"../selector"
 ], function( jQuery, access, support ) {
-
 var rfocusable = /^(?:input|select|textarea|button)$/i,
 	rclickable = /^(?:a|area)$/i;
 
@@ -31,7 +30,6 @@ jQuery.extend( {
 		}
 
 		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
-
 			// Fix name and attach hooks
 			name = jQuery.propFix[ name ] || name;
 			hooks = jQuery.propHooks[ name ];
@@ -56,7 +54,6 @@ jQuery.extend( {
 	propHooks: {
 		tabIndex: {
 			get: function( elem ) {
-
 				// elem.tabIndex doesn't always return the
 				// correct value when it hasn't been explicitly set
 				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
@@ -121,5 +118,4 @@ jQuery.each( [
 ], function() {
 	jQuery.propFix[ this.toLowerCase() ] = this;
 } );
-
 } );

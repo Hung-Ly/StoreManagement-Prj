@@ -21,7 +21,6 @@ describe("Event Tests", function() {
     });
 
     describe("Mouse Events", function() {
-
       it("'slideStart' event is triggered properly and can be binded to", function() {
         testSlider.on('slideStart', function() {
           flag = true;
@@ -114,7 +113,6 @@ describe("Event Tests", function() {
           expect(flag).not.toBeTruthy();
         });
       });
-
     });
 
     describe("Touch Events", function() {
@@ -200,7 +198,6 @@ describe("Event Tests", function() {
         expect(flag).toBeTruthy();
       });
 
-
       it("slider should not have duplicate events after calling 'refresh'", function() {
         touch.initEvent("touchstop");
         flag = 0;
@@ -265,7 +262,6 @@ describe("Event Tests", function() {
           expect(flag).not.toBeTruthy();
         });
       });
-
     });
 
     describe("Enabled/Disabled tests", function() {
@@ -294,7 +290,6 @@ describe("Event Tests", function() {
         expect(flag).toBeTruthy();
       });
     });
-
   }); // End of JQuery version tests
 
   describe("CommonJS version", function() {
@@ -343,5 +338,4 @@ describe("Event Tests", function() {
       });
     });
   }); // End of common JS tests
-
 }); // End of spec

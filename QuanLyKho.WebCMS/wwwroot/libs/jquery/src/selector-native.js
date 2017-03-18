@@ -5,7 +5,6 @@ define( [
 	"./var/hasOwn",
 	"./var/indexOf"
 ], function( jQuery, document, documentElement, hasOwn, indexOf ) {
-
 /*
  * Optional (non-Sizzle) selector module for custom builds.
  *
@@ -40,7 +39,6 @@ var hasDuplicate, sortInput,
 		documentElement.msMatchesSelector;
 
 function sortOrder( a, b ) {
-
 	// Flag for duplicate removal
 	if ( a === b ) {
 		hasDuplicate = true;
@@ -62,7 +60,6 @@ function sortOrder( a, b ) {
 
 	// Disconnected nodes
 	if ( compare & 1 ) {
-
 		// Choose the first element that is related to our preferred document
 		if ( a === document || a.ownerDocument === document &&
 			jQuery.contains( document, a ) ) {
@@ -149,15 +146,12 @@ jQuery.extend( {
 			nodeType = elem.nodeType;
 
 		if ( !nodeType ) {
-
 			// If no nodeType, this is expected to be an array
 			while ( ( node = elem[ i++ ] ) ) {
-
 				// Do not traverse comment nodes
 				ret += jQuery.text( node );
 			}
 		} else if ( nodeType === 1 || nodeType === 9 || nodeType === 11 ) {
-
 			// Use textContent for elements
 			return elem.textContent;
 		} else if ( nodeType === 3 || nodeType === 4 ) {
@@ -174,7 +168,6 @@ jQuery.extend( {
 		return a === bup || !!( bup && bup.nodeType === 1 && adown.contains( bup ) );
 	},
 	isXMLDoc: function( elem ) {
-
 		// documentElement is verified for cases where it doesn't yet exist
 		// (such as loading iframes in IE - #4833)
 		var documentElement = elem && ( elem.ownerDocument || elem ).documentElement;
@@ -207,5 +200,4 @@ jQuery.extend( jQuery.find, {
 		return value !== undefined ? value : elem.getAttribute( name );
 	}
 } );
-
 } );

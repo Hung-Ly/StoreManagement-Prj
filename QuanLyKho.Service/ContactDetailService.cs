@@ -1,6 +1,6 @@
 ﻿using QuanLyKho.Data.Infrastructure;
 using QuanLyKho.Data.Repositories;
-using QuanLyKho.Model.Models;
+using QuanLyKho.Model.Entities;
 
 namespace QuanLyKho.Service
 {
@@ -8,10 +8,11 @@ namespace QuanLyKho.Service
     {
         ContactDetail GetDefaultContact();
     }
+
     public class ContactDetailService : IContactDetailService
     {
-        IContactDetailRepository _contactDetailRepository;
-        IUnitOfWork _unitOfWork;
+        private IContactDetailRepository _contactDetailRepository;
+        private IUnitOfWork _unitOfWork;
 
         public ContactDetailService(IContactDetailRepository contactDetailRepository, IUnitOfWork unitOfWork)
         {

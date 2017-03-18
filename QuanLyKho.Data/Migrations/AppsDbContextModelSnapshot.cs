@@ -13,14 +13,178 @@ namespace QuanLyKho.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
+                .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.ContactDetail", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("ProviderKey");
+
+                    b.Property<string>("ProviderDisplayName");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("RoleId");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("QuanLyKho.Model.Entities.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(250);
+
+                    b.Property<DateTime?>("BirthDay");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FullName")
+                        .HasMaxLength(250);
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("QuanLyKho.Model.Entities.ContactDetail", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address")
                         .HasMaxLength(250);
@@ -51,11 +215,10 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("ContactDetails");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.Error", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Error", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -68,11 +231,10 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("Errors");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.Feedback", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Feedback", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -93,7 +255,7 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("Feedbacks");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.Footer", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Footer", b =>
                 {
                     b.Property<string>("ID")
                         .ValueGeneratedOnAdd()
@@ -107,11 +269,10 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("Footers");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.Menu", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Menu", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("DisplayOrder");
 
@@ -137,11 +298,10 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("Menus");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.MenuGroup", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.MenuGroup", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -152,11 +312,10 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("MenuGroups");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.Order", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Order", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("CreatedBy");
 
@@ -170,8 +329,7 @@ namespace QuanLyKho.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<string>("CustomerId")
-                        .HasMaxLength(128);
+                    b.Property<string>("CustomerId");
 
                     b.Property<string>("CustomerMessage")
                         .IsRequired()
@@ -194,10 +352,12 @@ namespace QuanLyKho.Data.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("CustomerId");
+
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.OrderDetail", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.OrderDetail", b =>
                 {
                     b.Property<int>("OrderID");
 
@@ -209,18 +369,15 @@ namespace QuanLyKho.Data.Migrations
 
                     b.HasKey("OrderID", "ProductID");
 
-                    b.HasAlternateKey("OrderID");
-
                     b.HasIndex("ProductID");
 
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.Page", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Page", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Alias")
                         .IsRequired()
@@ -236,7 +393,7 @@ namespace QuanLyKho.Data.Migrations
                     b.Property<string>("MetaDescription")
                         .HasMaxLength(250);
 
-                    b.Property<string>("MetaKeyWord")
+                    b.Property<string>("MetaKeyword")
                         .HasMaxLength(250);
 
                     b.Property<string>("Name")
@@ -255,11 +412,10 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("Pages");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.Post", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Post", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Alias")
                         .IsRequired()
@@ -287,7 +443,7 @@ namespace QuanLyKho.Data.Migrations
                     b.Property<string>("MetaDescription")
                         .HasMaxLength(250);
 
-                    b.Property<string>("MetaKeyWord")
+                    b.Property<string>("MetaKeyword")
                         .HasMaxLength(250);
 
                     b.Property<string>("Name")
@@ -310,11 +466,10 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.PostCategory", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.PostCategory", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Alias")
                         .IsRequired()
@@ -338,7 +493,7 @@ namespace QuanLyKho.Data.Migrations
                     b.Property<string>("MetaDescription")
                         .HasMaxLength(250);
 
-                    b.Property<string>("MetaKeyWord")
+                    b.Property<string>("MetaKeyword")
                         .HasMaxLength(250);
 
                     b.Property<string>("Name")
@@ -359,7 +514,7 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("PostCategories");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.PostTag", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.PostTag", b =>
                 {
                     b.Property<string>("TagID")
                         .HasMaxLength(50);
@@ -368,19 +523,15 @@ namespace QuanLyKho.Data.Migrations
 
                     b.HasKey("TagID", "PostID");
 
-                    b.HasAlternateKey("PostID");
-
-
                     b.HasAlternateKey("PostID", "TagID");
 
                     b.ToTable("PostTags");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.Product", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Product", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Alias")
                         .IsRequired()
@@ -408,7 +559,7 @@ namespace QuanLyKho.Data.Migrations
                     b.Property<string>("MetaDescription")
                         .HasMaxLength(250);
 
-                    b.Property<string>("MetaKeyWord")
+                    b.Property<string>("MetaKeyword")
                         .HasMaxLength(250);
 
                     b.Property<string>("MoreImages")
@@ -446,11 +597,10 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.ProductCategory", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.ProductCategory", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Alias")
                         .IsRequired()
@@ -474,7 +624,7 @@ namespace QuanLyKho.Data.Migrations
                     b.Property<string>("MetaDescription")
                         .HasMaxLength(250);
 
-                    b.Property<string>("MetaKeyWord")
+                    b.Property<string>("MetaKeyword")
                         .HasMaxLength(250);
 
                     b.Property<string>("Name")
@@ -495,7 +645,7 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("ProductCategories");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.ProductTag", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.ProductTag", b =>
                 {
                     b.Property<string>("TagID")
                         .HasMaxLength(50);
@@ -504,19 +654,15 @@ namespace QuanLyKho.Data.Migrations
 
                     b.HasKey("TagID", "ProductID");
 
-                    b.HasAlternateKey("ProductID");
-
-
                     b.HasAlternateKey("ProductID", "TagID");
 
                     b.ToTable("ProductTags");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.Slide", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Slide", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Content");
 
@@ -542,11 +688,10 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("Slides");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.SupportOnline", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.SupportOnline", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Department")
                         .HasMaxLength(50);
@@ -579,7 +724,7 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("SupportOnlines");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.SystemConfig", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.SystemConfig", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -598,7 +743,7 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("SystemConfigs");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.Tag", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Tag", b =>
                 {
                     b.Property<string>("ID")
                         .ValueGeneratedOnAdd()
@@ -612,7 +757,7 @@ namespace QuanLyKho.Data.Migrations
                     b.Property<string>("MetaDescription")
                         .HasMaxLength(250);
 
-                    b.Property<string>("MetaKeyWord")
+                    b.Property<string>("MetaKeyword")
                         .HasMaxLength(250);
 
                     b.Property<string>("Name")
@@ -635,7 +780,7 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.VisitorStatistic", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.VisitorStatistic", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd();
@@ -650,56 +795,95 @@ namespace QuanLyKho.Data.Migrations
                     b.ToTable("VisitorStatistics");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.Menu", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("QuanLyKho.Model.Models.MenuGroup", "MenuGroup")
+                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
+                        .WithMany("Claims")
+                        .HasForeignKey("RoleId");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("QuanLyKho.Model.Entities.ApplicationUser")
+                        .WithMany("Claims")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("QuanLyKho.Model.Entities.ApplicationUser")
+                        .WithMany("Logins")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId");
+
+                    b.HasOne("QuanLyKho.Model.Entities.ApplicationUser")
+                        .WithMany("Roles")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Menu", b =>
+                {
+                    b.HasOne("QuanLyKho.Model.Entities.MenuGroup", "MenuGroup")
                         .WithMany("Menus")
                         .HasForeignKey("GroupID");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.OrderDetail", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Order", b =>
                 {
-                    b.HasOne("QuanLyKho.Model.Models.Order", "Order")
+                    b.HasOne("QuanLyKho.Model.Entities.ApplicationUser", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId");
+                });
+
+            modelBuilder.Entity("QuanLyKho.Model.Entities.OrderDetail", b =>
+                {
+                    b.HasOne("QuanLyKho.Model.Entities.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderID");
 
-                    b.HasOne("QuanLyKho.Model.Models.Product", "Product")
+                    b.HasOne("QuanLyKho.Model.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductID");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.Post", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Post", b =>
                 {
-                    b.HasOne("QuanLyKho.Model.Models.PostCategory", "PostCategories")
+                    b.HasOne("QuanLyKho.Model.Entities.PostCategory", "PostCategories")
                         .WithMany("Posts")
                         .HasForeignKey("CategoryID");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.PostTag", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.PostTag", b =>
                 {
-                    b.HasOne("QuanLyKho.Model.Models.Post", "Post")
+                    b.HasOne("QuanLyKho.Model.Entities.Post", "Post")
                         .WithMany("PostTags")
                         .HasForeignKey("PostID");
 
-                    b.HasOne("QuanLyKho.Model.Models.Tag", "Tag")
+                    b.HasOne("QuanLyKho.Model.Entities.Tag", "Tag")
                         .WithMany()
                         .HasForeignKey("TagID");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.Product", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.Product", b =>
                 {
-                    b.HasOne("QuanLyKho.Model.Models.ProductCategory", "ProductCategory")
+                    b.HasOne("QuanLyKho.Model.Entities.ProductCategory", "ProductCategory")
                         .WithMany("Products")
                         .HasForeignKey("CategoryID");
                 });
 
-            modelBuilder.Entity("QuanLyKho.Model.Models.ProductTag", b =>
+            modelBuilder.Entity("QuanLyKho.Model.Entities.ProductTag", b =>
                 {
-                    b.HasOne("QuanLyKho.Model.Models.Product", "Product")
+                    b.HasOne("QuanLyKho.Model.Entities.Product", "Product")
                         .WithMany("ProductTags")
                         .HasForeignKey("ProductID");
 
-                    b.HasOne("QuanLyKho.Model.Models.Tag", "Tag")
+                    b.HasOne("QuanLyKho.Model.Entities.Tag", "Tag")
                         .WithMany()
                         .HasForeignKey("TagID");
                 });
