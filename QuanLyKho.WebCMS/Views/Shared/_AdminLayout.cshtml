@@ -10,12 +10,13 @@
     <link href="~/libs/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <link href="~/libs/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href="~/libs/ionicons/css/ionicons.css" rel="stylesheet" />
+    <link href="~/libs/toastr/toastr.css" rel="stylesheet" />
 
     <link href="~/admin/css/AdminLTE.css" rel="stylesheet" />
     <link href="~/admin/css/skins/_all-skins.css" rel="stylesheet" />
 
 </head>
-<body class="hold-transition skin-blue sidebar-mini" ng-app="app" >
+<body class="hold-transition skin-blue sidebar-mini" ng-app="app">
     <!-- Site wrapper -->
     <div class="wrapper">
         @Html.Partial("Admin/Header");
@@ -25,11 +26,11 @@
         <!-- Left side column. contains the sidebar -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-        <div >
-            @RenderBody()
-            @RenderSection("scripts", required: false)
-            <hr />
-        </div>
+            <div>
+                @RenderBody()
+                @RenderSection("scripts", required: false)
+                <hr />
+            </div>
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
@@ -220,6 +221,8 @@
     <!-- AngularJS -->
     <script src="~/libs/angular/angular.js"></script>
     <script src="~/libs/angular-ui-router/release/angular-ui-router.js"></script>
+    <!--Toast-- Notification-->
+    <script src="~/libs/toastr/toastr.js"></script>
     <!-- AdminLTE App -->
     <script src="~/admin/js/app.js"></script>
     <script src="~/admin/js/demo.js"></script>
@@ -228,20 +231,23 @@
     <script src="~/app/shared/modules/app.common.js"></script>
     <script src="~/app/shared/filters/statusFilter.js"></script>
     <script src="~/app/shared/directives/pagerDirective.js"></script>
+    <script src="~/app/shared/services/notificationService.js"></script>
     <script src="~/app/shared/services/apiService.js"></script>
     <script src="~/app/components/products/product.module.js"></script>
     <script src="~/app/components/productCategories/productCategories.module.js"></script>
 
 
-    <script src="~/app/app.js"></script>    
+    <script src="~/app/app.js"></script>
 
     <!--Controller-->
     <script src="~/app/components/home/homeController.js"></script>
-   
+
     <script src="~/app/components/products/productAddController.js"></script>
     <script src="~/app/components/products/productEditController.js"></script>
     <script src="~/app/components/products/productsListController.js"></script>
-    <script src="~/app/components/productCategories/productCategoriesListController.js"></script>
 
+    <script src="~/app/components/productCategories/productCategoriesListController.js"></script>
+    <script src="~/app/components/productCategories/productCategoryAddController.js"></script>
+    <script src="~/app/components/productCategories/productCategoryEditController.js"></script>
 </body>
 </html>

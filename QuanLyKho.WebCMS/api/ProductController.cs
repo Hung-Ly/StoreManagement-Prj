@@ -1,184 +1,59 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using QuanLyKho.Model.Entities;
-using QuanLyKho.Service;
-using QuanLyKho.WebCMS.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using QuanLyKho.Model.Entities;
+using QuanLyKho.Service;
+using QuanLyKho.WebCMS.Infrastructure.Extenssions;
+using QuanLyKho.WebCMS.Infrastructure.Responses;
+using QuanLyKho.WebCMS.Models;
 
 namespace QuanLyKho.WebCMS.Api
 {
     //    [Route("api/product")]
     //    [Authorize]
-    //    public class ProductController : Controller
-    //    {
-    //        #region Initialize
+    public class productcontroller : Controller
+    {
+        #region initialize
 
-    //        private IProductService _productService;
+        private IProductService _productService;
 
-    //        public ProductController(IProductService productService)
+        public productcontroller(IProductService productService)
 
-    //        {
-    //            this._productService = productService;
-    //        }
+        {
+            this._productService = productService;
+        }
 
-    //        #endregion Initialize
+        #endregion initialize
 
-    //        [Route("getallparents")]
-    //        [HttpGet]
-    //        public HttpResponseMessage GetAll(HttpRequestMessage request)
-    //        {
-    //            Func<HttpResponseMessage> func = () =>
-    //            {
-    //                var model = _productService.GetAll();
+        [Route("getall")]
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var model = _productService.GetAll();
+            var responseData = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(model);
 
-    //                var responseData = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(model);
+            var response = new ListModelResponse<ProductViewModel>() as IListModelResponse<ProductViewModel>;
 
-    //                var response = request.CreateResponse(HttpStatusCode.OK, responseData);
-    //                return response;
-    //            };
-    //            return CreateHttpResponse(request, func);
-    //        }
+            try
+            {
+                response.PageSize = 0;
+                response.PageNumber = 0;
+                response.TotalPages = 0;
+                response.Model = responseData;
 
-    //        [Route("getbyid/{id:int}")]
-    //        [HttpGet]
-    //        public HttpResponseMessage GetById(HttpRequestMessage request, int id)
-    //        {
-    //            var model = _productService.GetById(id);
+                response.Message = String.Format("Total of records: {0}", response.Model.Count());
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.Message;
+            }
+            return response.ToHttpResponse();
 
-    //            var responseData = Mapper.Map<Product, ProductViewModel>(model);
-
-    //            var response = request.CreateResponse(HttpStatusCode.OK, responseData);
-
-    //            return response;
-    //        }
-
-    //        [Route("getall")]
-    //        [HttpGet]
-    //        public HttpResponseMessage GetAll(HttpRequestMessage request, string keyword, int page, int pageSize = 20)
-    //        {
-    //            int totalRow = 0;
-    //            var model = _productService.GetAll(keyword);
-
-    //            totalRow = model.Count();
-    //            var query = model.OrderByDescending(x => x.CreatedDate).Skip(page * pageSize).Take(pageSize);
-
-    //            var responseData = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(query.AsEnumerable());
-
-    //            var paginationSet = new PaginationSet<ProductViewModel>()
-    //            {
-    //                Items = responseData,
-    //                Page = page,
-    //                TotalCount = totalRow,
-    //                TotalPages = (int)Math.Ceiling((decimal)totalRow / pageSize)
-    //            };
-    //            var response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
-    //            return response;
-    //        }
-
-    //        [Route("create")]
-    //        [HttpPost]
-    //        [AllowAnonymous]
-    //        public HttpResponseMessage Create(HttpRequestMessage request, ProductViewModel productCategoryVm)
-    //        {
-    //            HttpResponseMessage response = null;
-    //            if (!ModelState.IsValid)
-    //            {
-    //                response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-    //            }
-    //            else
-    //            {
-    //                var newProduct = new Product();
-    //                newProduct.UpdateProduct(productCategoryVm);
-    //                newProduct.CreatedDate = DateTime.Now;
-    //                newProduct.CreatedBy = User.Identity.Name;
-    //                _productService.Add(newProduct);
-    //                _productService.Save();
-
-    //                var responseData = Mapper.Map<Product, ProductViewModel>(newProduct);
-    //                response = request.CreateResponse(HttpStatusCode.Created, responseData);
-    //            }
-
-    //            return response;
-    //        }
-
-    //        [Route("update")]
-    //        [HttpPut]
-    //        [AllowAnonymous]
-    //        public HttpResponseMessage Update(HttpRequestMessage request, ProductViewModel productVm)
-    //        {
-    //            HttpResponseMessage response = null;
-    //            if (!ModelState.IsValid)
-    //            {
-    //                response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-    //            }
-    //            else
-    //            {
-    //                var dbProduct = _productService.GetById(productVm.ID);
-
-    //                dbProduct.UpdateProduct(productVm);
-    //                dbProduct.UpdatedDate = DateTime.Now;
-    //                dbProduct.UpdatedBy = User.Identity.Name;
-    //                _productService.Update(dbProduct);
-    //                _productService.Save();
-
-    //                var responseData = Mapper.Map<Product, ProductViewModel>(dbProduct);
-    //                response = request.CreateResponse(HttpStatusCode.Created, responseData);
-    //            }
-
-    //            return response;
-    //        }
-
-    //        [Route("delete")]
-    //        [HttpDelete]
-    //        [AllowAnonymous]
-    //        public HttpResponseMessage Delete(HttpRequestMessage request, int id)
-    //        {
-    //            HttpResponseMessage response = null;
-    //            if (!ModelState.IsValid)
-    //            {
-    //                response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-    //            }
-    //            else
-    //            {
-    //                var oldProductCategory = _productService.Delete(id);
-    //                _productService.Save();
-
-    //                var responseData = Mapper.Map<Product, ProductViewModel>(oldProductCategory);
-    //                response = request.CreateResponse(HttpStatusCode.Created, responseData);
-    //            }
-
-    //            return response;
-    //        }
-
-    //        [Route("deletemulti")]
-    //        [HttpDelete]
-    //        [AllowAnonymous]
-    //        public HttpResponseMessage DeleteMulti(HttpRequestMessage request, string checkedProducts)
-    //        {
-    //            HttpResponseMessage response = null;
-    //            if (!ModelState.IsValid)
-    //            {
-    //                response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
-    //            }
-    //            else
-    //            {
-    //                var listProductCategory = new JavaScriptSerializer().Deserialize<List<int>>(checkedProducts);
-    //                foreach (var item in listProductCategory)
-    //                {
-    //                    _productService.Delete(item);
-    //                }
-
-    //                _productService.Save();
-
-    //                response = request.CreateResponse(HttpStatusCode.OK, listProductCategory.Count);
-    //            }
-
-    //            return response;
-    //        }
-    //    }
+        }
+    }
 }

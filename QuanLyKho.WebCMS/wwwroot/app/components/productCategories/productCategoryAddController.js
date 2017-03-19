@@ -5,15 +5,39 @@
         .module('app.product_categories')
         .controller('productCategoryAddController', productCategoryAddController);
 
-    productCategoryAddController.$inject = ['$location']; 
+    productCategoryAddController.$inject = ['$scope','apiService','notificationService']; 
 
-    function productCategoryAddController($location) {
-        /* jshint validthis:true */
-        var vm = this;
-        vm.title = 'productCategoryAddController';
+    function productCategoryAddController($scope, apiService, notificationService) {
+        $scope.productCategory = {
+            createdDate: new Date(),
+            status: true
+        };
+        $scope.AddProductCategory = AddProductCategory;
 
-        activate();
 
-        function activate() { }
+        function AddProductCategory() {
+            //console.log($scope.productCategory);
+            apiService.post('api/productcategories/create', $scope.productCategory,
+                function (result) {
+                    //console.log(result.data.model);
+                    notificationService.displaySuccess(result.data.model.name + ' đã được thêm mới.');
+                }, function (error) {
+                    //console.log(error);
+                    notificationService.displayError('Thêm mới không thành công.');
+                });
+        };
+
+        function loadParentCategory() {
+            apiService.get('api/productcategories/getallparents', null, function (result) {
+                //console.log(result.data.model);
+                //result.data.model.forEach(function (entry) {
+                //    console.log(entry.name);
+                //});
+                $scope.parentCategories = result.data.model;
+            }, function () {
+                console.log('Cannot get list parent');
+            });
+        }
+        loadParentCategory();
     }
 })();

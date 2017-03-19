@@ -19,10 +19,10 @@ namespace QuanLyKho.Data.Infrastructure
         public RepositoryBase(AppsDbContext context)
         {
             _context = context;
-            if (_context == null)
-            {
-                throw new ArgumentNullException("Context");
-            }
+            //if (_context == null)
+            //{
+            //    throw new ArgumentNullException("Context");
+            //}
             // Hung Ly
             //entities = context.Set<T>();
         }
@@ -33,23 +33,24 @@ namespace QuanLyKho.Data.Infrastructure
 
         public virtual void Add(T entity)
         {
-            //EntityEntry dbEntityEntry = _context.Entry<T>(entity);
-            //_context.Set<T>().Add(entity);
-
-            if (entity == null)
-            {
-                throw new ArgumentNullException("entity");
-            }
-
             EntityEntry dbEntityEntry = _context.Entry<T>(entity);
-            if (dbEntityEntry.State != (EntityState)EntityState.Detached)
-            {
-                dbEntityEntry.State = EntityState.Added;
-            }
-            else
-            {
-                _context.Set<T>().Add(entity);
-            }
+            _context.Set<T>().Add(entity);
+
+
+            //if (entity == null)
+            //{
+            //    throw new ArgumentNullException("entity");
+            //}
+
+            //EntityEntry dbEntityEntry = _context.Entry<T>(entity);
+            //if (dbEntityEntry.State != (EntityState)EntityState.Detached)
+            //{
+            //    dbEntityEntry.State = EntityState.Added;
+            //}
+            //else
+            //{
+            //    _context.Set<T>().Add(entity);
+            //}
         }
 
         public virtual void Update(T entity)
@@ -158,10 +159,18 @@ namespace QuanLyKho.Data.Infrastructure
 
             return query.Where(predicate).FirstOrDefault();
         }
-
+        //200
         public IEnumerable<T> GetMulti(Expression<Func<T, bool>> predicate, string[] includes = null)
         {
-            throw new NotImplementedException();
+            if (includes != null && includes.Count() > 0)
+            {
+                var query = _context.Set<T>().Include(includes.First());
+                foreach (var include in includes.Skip(1))
+                    query = query.Include(include);
+                return query.Where<T>(predicate).AsQueryable<T>();
+            }
+
+            return _context.Set<T>().Where<T>(predicate).AsQueryable<T>();
         }
 
         public IEnumerable<T> GetMultiPaging(Expression<Func<T, bool>> filter, out int total, int index = 0, int size = 50, string[] includes = null)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -27,11 +28,35 @@ namespace QuanLyKho.WebCMS.Api
 
         #endregion Initialize
 
-        [Route("getall")]
+        [Route("getallparents")]
         [HttpGet]
-        public IActionResult GetAll(int page, int pageSize = 3)
+        public IActionResult GetAll()
         {
             var model = _productCategoryService.GetAll();
+            int totalRow = model.Count();
+           
+            var responseData = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(model);
+
+            var response = new ListModelResponse<ProductCategoryViewModel>() as IListModelResponse<ProductCategoryViewModel>;
+            try
+            {
+                response.Model = responseData;
+
+                response.Message = String.Format("Total of records: {0}", response.Model.Count());
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.Message;
+            }
+            return response.ToHttpResponse();
+        }
+
+        [Route("getall")]
+        [HttpGet]
+        public IActionResult GetAll( int page, string keyword,int pageSize = 3 )
+        {
+            var model = _productCategoryService.GetAll(keyword);
             int totalRow = model.Count();
 
             var query = model.OrderBy(x => x.ID).Skip(page * pageSize).Take(pageSize);
@@ -40,8 +65,7 @@ namespace QuanLyKho.WebCMS.Api
             var response = new ListModelResponse<ProductCategoryViewModel>() as IListModelResponse<ProductCategoryViewModel>;
             try
             {
-                //totalPage
-                response.PageSize = pageSize;
+                response.PageSize = totalRow;
                 response.PageNumber = page;
                 response.TotalPages = (int)Math.Ceiling((double)totalRow / pageSize);
                 response.Model = responseData;
@@ -56,14 +80,29 @@ namespace QuanLyKho.WebCMS.Api
             return response.ToHttpResponse();
         }
 
-        //[Route("getbyid/{id:int}")]
-        //[HttpGet]
-        //public ProductCategoryViewModel GetById(HttpRequestMessage request, int id)
-        //{
-        //    var model = _productCategoryService.GetById(id);
+        [Route("create")]
+        [HttpPost]
+        public IActionResult Create([FromBody]ProductCategoryViewModel productCategoryVm)
+        {
+            var response = new SingleModelResponse<ProductCategoryViewModel>() as ISingleModelResponse<ProductCategoryViewModel>;
+            try
+            {
+                var newProductCategory = new ProductCategory();
+                newProductCategory.UpdateProductCategory(productCategoryVm);
+                newProductCategory.CreatedDate = DateTime.Now;
+                _productCategoryService.Add(newProductCategory);
+                _productCategoryService.Save();
 
-        //    var responseData = Mapper.Map<ProductCategory, ProductCategoryViewModel>(model);
-        //    return responseData;
-        //}
+                var responseData = Mapper.Map<ProductCategory, ProductCategoryViewModel>(newProductCategory);
+                response.Model = responseData;
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
+            }
+
+            return response.ToHttpResponse();
+        }
     }
 }

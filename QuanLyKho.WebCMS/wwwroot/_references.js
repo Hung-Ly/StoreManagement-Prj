@@ -22,6 +22,7 @@
 /// <reference path="app/shared/filters/statusfilter.js" />
 /// <reference path="app/shared/modules/app.common.js" />
 /// <reference path="app/shared/services/apiservice.js" />
+/// <reference path="app/shared/services/notificationservice.js" />
 /// <reference path="js/jquery.etalage.min.js" />
 /// <reference path="js/jquery.flexisel.js" />
 /// <reference path="js/jquery.min.js" />
