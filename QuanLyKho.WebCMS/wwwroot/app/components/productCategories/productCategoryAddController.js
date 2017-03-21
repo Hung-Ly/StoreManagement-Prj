@@ -1,4 +1,6 @@
-﻿(function () {
+﻿/// <reference path="../../../libs/angular/angular.min.js" />
+
+(function () {
     'use strict';
 
     angular
@@ -14,13 +16,11 @@
         };
         $scope.AddProductCategory = AddProductCategory;
 
-
         function AddProductCategory() {
-            //console.log($scope.productCategory);
             apiService.post('api/productcategories/create', $scope.productCategory,
-                function (result) {
-                    //console.log(result.data.model);
+                function (result) {                   
                     notificationService.displaySuccess(result.data.model.name + ' đã được thêm mới.');
+                    console.log(result.data.model);
                 }, function (error) {
                     //console.log(error);
                     notificationService.displayError('Thêm mới không thành công.');

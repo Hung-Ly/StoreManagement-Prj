@@ -16,7 +16,9 @@ namespace QuanLyKho.WebCMS.Infrastructure.Responses
         public int PageNumber { get; set; }
         public int TotalPages { get; set; }
 
+
         public IEnumerable<TModel> Model { get; set; }
-        
+
+        public int TotalRows { get; set; }
     }
 }

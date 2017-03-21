@@ -70,6 +70,7 @@ namespace QuanLyKho.Service
 
         public void Save()
         {
+            _ProductCategoryRepository.Commit();
             _unitOfWork.Commit();
         }
 

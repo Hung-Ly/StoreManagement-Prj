@@ -117,8 +117,9 @@ namespace QuanLyKho.WebCMS
                 services.AddScoped<SignInManager<ApplicationUser>, SignInManager<ApplicationUser>>();
 
                 // Hung Ly - Controller as Services Add framework services.
-                services.AddMvc().AddControllersAsServices();
-               // services.AddAutoMapper();
+                services.AddMvc();//.AddControllersAsServices();
+
+                //services.AddAutoMapper();
 
                 services.AddSingleton<IUnitOfWork, UnitOfWork>();
 

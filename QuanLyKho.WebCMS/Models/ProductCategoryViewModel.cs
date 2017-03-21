@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using QuanLyKho.Model.Entities;
 
 namespace QuanLyKho.WebCMS.Models
 {
@@ -39,5 +40,10 @@ namespace QuanLyKho.WebCMS.Models
 
         [Required(ErrorMessage = "Yêu cầu nhập trạng thái")]
         public bool Status { set; get; }
+
+        public static implicit operator ProductCategoryViewModel(ProductCategory v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

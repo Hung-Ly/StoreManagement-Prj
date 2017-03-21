@@ -20,7 +20,12 @@
             .state('edit_product_category', {
                 url: "/edit_product_category/:id",
                 templateUrl: "/app/components/productCategories/productCategoryEditView.html",
-                controller: "productCategoryEditController"
+                controller: "productCategoryEditController",
+                //resolve: {
+                //    resolvedHikelist: ['Hikelist', function (Hikelist, $stateParams) {
+                //        return Itemlist.get({ id: $stateParams.listId });
+                //    }]
+                //}
             });
     }
 })();

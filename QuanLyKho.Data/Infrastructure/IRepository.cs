@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace QuanLyKho.Data.Infrastructure
 {
@@ -8,11 +9,12 @@ namespace QuanLyKho.Data.Infrastructure
     {
         // Hung Ly
         void Add(T entity);
-
         void Update(T entity);
 
         // Hung Ly
         void Delete(T entity);
+
+        IDbContextTransaction BeginTransaction();
 
         void Delete(int id);
 

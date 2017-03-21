@@ -6,6 +6,7 @@ namespace QuanLyKho.WebCMS.Infrastructure.Responses
     public interface IListModelResponse<TModel> : IResponse
     {
         int PageSize { get; set; }
+        int TotalRows { get; set; }
 
         int PageNumber { get; set; }
 

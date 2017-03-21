@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace QuanLyKho.Data.Infrastructure
 {
@@ -33,10 +34,11 @@ namespace QuanLyKho.Data.Infrastructure
 
         public virtual void Add(T entity)
         {
-            EntityEntry dbEntityEntry = _context.Entry<T>(entity);
+            //EntityEntry dbEntityEntry = _context.Entry<T>(entity);
+            //_context.Set<T>().Add(entity);
+
             _context.Set<T>().Add(entity);
-
-
+            //_context.Add(entity);
             //if (entity == null)
             //{
             //    throw new ArgumentNullException("entity");
@@ -55,18 +57,20 @@ namespace QuanLyKho.Data.Infrastructure
 
         public virtual void Update(T entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("entity");
-            }
+            _context.Set<T>().Update(entity);
 
-            EntityEntry dbEntityEntry = _context.Entry<T>(entity);
+            //if (entity == null)
+            //{
+            //    throw new ArgumentNullException("entity");
+            //}
 
-            if (dbEntityEntry.State != (EntityState)EntityState.Detached)
-            {
-                _context.Set<T>().Attach(entity);
-            }
-            dbEntityEntry.State = EntityState.Modified;
+            //EntityEntry dbEntityEntry = _context.Entry<T>(entity);
+
+            //if (dbEntityEntry.State != (EntityState)EntityState.Detached)
+            //{
+            //    _context.Set<T>().Attach(entity);
+            //}
+            //dbEntityEntry.State = EntityState.Modified;
         }
 
         // Hung Ly
@@ -207,6 +211,11 @@ namespace QuanLyKho.Data.Infrastructure
         }
 
         public IEnumerable<T> GetListProductByTag(string tagId, int page, int pageSize, out int totalRow)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDbContextTransaction BeginTransaction()
         {
             throw new NotImplementedException();
         }
