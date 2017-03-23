@@ -79,4 +79,5 @@ describe("Scrollable body test", function() {
             expect(newSliderValue).toEqual(14);
         });
     });
+
 });

@@ -1,6 +1,7 @@
 define( [
 	"../data/var/dataPriv"
 ], function( dataPriv ) {
+
 // Mark scripts as having already been evaluated
 function setGlobalEval( elems, refElements ) {
 	var i = 0,

@@ -7,9 +7,9 @@
         .module('app.product_categories')
         .controller('productCategoryAddController', productCategoryAddController);
 
-    productCategoryAddController.$inject = ['$scope','apiService','notificationService']; 
+    productCategoryAddController.$inject = ['$scope','apiService', '$state', 'notificationService']; 
 
-    function productCategoryAddController($scope, apiService, notificationService) {
+    function productCategoryAddController($scope, apiService, $state, notificationService) {
         $scope.productCategory = {
             createdDate: new Date(),
             status: true
@@ -20,6 +20,7 @@
             apiService.post('api/productcategories/create', $scope.productCategory,
                 function (result) {                   
                     notificationService.displaySuccess(result.data.model.name + ' đã được thêm mới.');
+                    $state.go("product_categories");
                     console.log(result.data.model);
                 }, function (error) {
                     //console.log(error);

@@ -26,6 +26,7 @@ namespace QuanLyKho.Model.Entities
         public int? ParentID { get; set; }
 
         public int? DisplayOrder { get; set; }
+        public bool isDeleted { get; set; }
 
         [MaxLength(250)]
         public string Image { get; set; }

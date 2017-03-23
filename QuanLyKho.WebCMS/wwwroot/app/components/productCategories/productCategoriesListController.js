@@ -22,6 +22,11 @@
         $scope.selectAll = selectAll;
 
 
+        $scope.GetSeoTitle = GetSeoTitle;
+
+        function GetSeoTitle() {
+            $scope.productCategories.alias = commonService.getSeoTitle($scope.productCategories.name);
+        }
         function deleteMultiple() {
             var listId = [];
             $.each($scope.selected, function (i, item) {

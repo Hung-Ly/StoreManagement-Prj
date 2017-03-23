@@ -6,6 +6,7 @@
   *************************
 */
 describe("'tooltip_position' Option tests", function() {
+
   var testSlider;
 
   afterEach(function() {
@@ -16,6 +17,7 @@ describe("'tooltip_position' Option tests", function() {
   });
 
   describe("vertical slider tests", function() {
+
     it("should be aligned to the left of the handle if set to 'left'", function() {
       // Create slider
       testSlider = new Slider("#testSlider1", {
@@ -87,9 +89,12 @@ describe("'tooltip_position' Option tests", function() {
       expect(mainTooltipHasClassRight).toBeTruthy();
       expect(testSlider.tooltip.style.left).toBe("100%");
     });
+
   });
 
+
   describe("horizontal slider tests", function() {
+
     it("should be aligned above the handle if set to 'top'", function() {
       // Create slider
       testSlider = new Slider("#testSlider1", {
@@ -183,5 +188,7 @@ describe("'tooltip_position' Option tests", function() {
       expect(mainTooltipHasClassTop).toBeTruthy();
       expect(testSlider.tooltip.style.top).toBe("");
     });
+
   });
+
 });

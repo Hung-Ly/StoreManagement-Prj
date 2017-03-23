@@ -42,20 +42,20 @@ namespace QuanLyKho.Service
 
         public void Delete(int id)
         {
-            _ProductCategoryRepository.Delete(id);
+            _ProductCategoryRepository.GetSingle(id).isDeleted = true;
         }
 
         public IEnumerable<ProductCategory> GetAll()
         {
-            return _ProductCategoryRepository.GetAll();
+            return _ProductCategoryRepository.GetMulti(x => x.isDeleted == false);
         }
 
         public IEnumerable<ProductCategory> GetAll(string keyword)
         {
             if (!string.IsNullOrEmpty(keyword))
-                return _ProductCategoryRepository.GetMulti(x => x.Name.Contains(keyword) || x.Description.Contains(keyword));
+                return _ProductCategoryRepository.GetMulti(x =>x.isDeleted ==false && (x.Name.Contains(keyword) || x.Description.Contains(keyword)));
             else
-                return _ProductCategoryRepository.GetAll();
+                return _ProductCategoryRepository.GetMulti(x => x.isDeleted == false);
         }
 
         public IEnumerable<ProductCategory> GetAllByParentId(int parentId)

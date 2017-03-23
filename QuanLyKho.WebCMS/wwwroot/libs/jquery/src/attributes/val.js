@@ -3,6 +3,7 @@ define( [
 	"./support",
 	"../core/init"
 ], function( jQuery, support ) {
+
 var rreturn = /\r/g,
 	rspaces = /[\x20\t\r\n\f]+/g;
 
@@ -55,8 +56,10 @@ jQuery.fn.extend( {
 			// Treat null/undefined as ""; convert numbers to string
 			if ( val == null ) {
 				val = "";
+
 			} else if ( typeof val === "number" ) {
 				val += "";
+
 			} else if ( jQuery.isArray( val ) ) {
 				val = jQuery.map( val, function( value ) {
 					return value == null ? "" : value + "";
@@ -77,6 +80,7 @@ jQuery.extend( {
 	valHooks: {
 		option: {
 			get: function( elem ) {
+
 				var val = jQuery.find.attr( elem, "value" );
 				return val != null ?
 					val :
@@ -112,6 +116,7 @@ jQuery.extend( {
 								!option.disabled : option.getAttribute( "disabled" ) === null ) &&
 							( !option.parentNode.disabled ||
 								!jQuery.nodeName( option.parentNode, "optgroup" ) ) ) {
+
 						// Get the specific value for the option
 						value = jQuery( option ).val();
 
@@ -168,4 +173,5 @@ jQuery.each( [ "radio", "checkbox" ], function() {
 		};
 	}
 } );
+
 } );

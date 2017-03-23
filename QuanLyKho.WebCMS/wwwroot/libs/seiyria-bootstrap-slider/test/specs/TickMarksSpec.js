@@ -8,8 +8,10 @@
     Verify that the number of tick marks matches what you set
     Verify the tick marks are at the correct intervals
 
+
 */
 describe("Slider with ticks tests", function() {
+
 	var testSlider;
 
 	it("Should have the number of tick marks you specify", function() {
@@ -156,7 +158,7 @@ describe("Slider with ticks tests", function() {
 			.sort(function(tickLabelElemA, tickLabelElemB) {
 				var leftOffsetA = $(tickLabelElemA).position().left;
 				var leftOffsetB = $(tickLabelElemB).position().left;
-
+				
 				return leftOffsetA - leftOffsetB;
 			})
 			.map(function() { return $(this).text(); })

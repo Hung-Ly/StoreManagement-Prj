@@ -1,45 +1,48 @@
-define([
+define( [
 	"../data/var/dataPriv"
-], function (dataPriv) {
-    function showHide(elements, show) {
-        var display, elem,
-            values = [],
-            index = 0,
-            length = elements.length;
+], function( dataPriv ) {
 
-        // Determine new display value for elements that need to change
-        for (; index < length; index++) {
-            elem = elements[index];
-            if (!elem.style) {
-                continue;
-            }
+function showHide( elements, show ) {
+	var display, elem,
+		values = [],
+		index = 0,
+		length = elements.length;
 
-            display = elem.style.display;
-            if (show) {
-                if (display === "none") {
-                    // Restore a pre-hide() value if we have one
-                    values[index] = dataPriv.get(elem, "display") || "";
-                }
-            } else {
-                if (display !== "none") {
-                    values[index] = "none";
+	// Determine new display value for elements that need to change
+	for ( ; index < length; index++ ) {
+		elem = elements[ index ];
+		if ( !elem.style ) {
+			continue;
+		}
 
-                    // Remember the value we're replacing
-                    dataPriv.set(elem, "display", display);
-                }
-            }
-        }
+		display = elem.style.display;
+		if ( show ) {
+			if ( display === "none" ) {
 
-        // Set the display of the elements in a second loop
-        // to avoid the constant reflow
-        for (index = 0; index < length; index++) {
-            if (values[index] != null) {
-                elements[index].style.display = values[index];
-            }
-        }
+				// Restore a pre-hide() value if we have one
+				values[ index ] = dataPriv.get( elem, "display" ) || "";
+			}
+		} else {
+			if ( display !== "none" ) {
+				values[ index ] = "none";
 
-        return elements;
-    }
+				// Remember the value we're replacing
+				dataPriv.set( elem, "display", display );
+			}
+		}
+	}
 
-    return showHide;
-});
+	// Set the display of the elements in a second loop
+	// to avoid the constant reflow
+	for ( index = 0; index < length; index++ ) {
+		if ( values[ index ] != null ) {
+			elements[ index ].style.display = values[ index ];
+		}
+	}
+
+	return elements;
+}
+
+return showHide;
+
+} );

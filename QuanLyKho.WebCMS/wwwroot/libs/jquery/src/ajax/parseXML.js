@@ -1,25 +1,27 @@
-define([
+define( [
 	"../core"
-], function (jQuery) {
-    // Cross-browser xml parsing
-    jQuery.parseXML = function (data) {
-        var xml;
-        if (!data || typeof data !== "string") {
-            return null;
-        }
+], function( jQuery ) {
 
-        // Support: IE9
-        try {
-            xml = (new window.DOMParser()).parseFromString(data, "text/xml");
-        } catch (e) {
-            xml = undefined;
-        }
+// Cross-browser xml parsing
+jQuery.parseXML = function( data ) {
+	var xml;
+	if ( !data || typeof data !== "string" ) {
+		return null;
+	}
 
-        if (!xml || xml.getElementsByTagName("parsererror").length) {
-            jQuery.error("Invalid XML: " + data);
-        }
-        return xml;
-    };
+	// Support: IE9
+	try {
+		xml = ( new window.DOMParser() ).parseFromString( data, "text/xml" );
+	} catch ( e ) {
+		xml = undefined;
+	}
 
-    return jQuery.parseXML;
-});
+	if ( !xml || xml.getElementsByTagName( "parsererror" ).length ) {
+		jQuery.error( "Invalid XML: " + data );
+	}
+	return xml;
+};
+
+return jQuery.parseXML;
+
+} );

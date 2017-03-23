@@ -1,4 +1,5 @@
 define( function() {
+
 // A method for quickly swapping in/out CSS properties to get correct calculations.
 return function( elem, options, callback, args ) {
 	var ret, name,
@@ -19,4 +20,5 @@ return function( elem, options, callback, args ) {
 
 	return ret;
 };
+
 } );

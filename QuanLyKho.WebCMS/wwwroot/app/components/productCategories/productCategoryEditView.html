@@ -25,8 +25,8 @@
                     <label for="inputEmail3" class="col-sm-2 control-label">Tên danh mục</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" ng-maxlength="256"  ng-change="GetSeoTitle()" required name="Name" ng-model="productCategory.name">
-                        <span ng-show="frmUpdateProductCategory.name.$invail" class="has-error">Phải nhập tên danh mục</span>
-                        <span class="has-error">Tên danh mục chỉ được 256 ký tự</span>
+                        <span ng-show="frmUpdateProductCategory.name.$invalid" class="has-error">Phải nhập tên danh mục</span>
+                        <span ng-show="frmUpdateProductCategory.name.$error.max"  class="has-error">Tên danh mục chỉ được 256 ký tự</span>
 
                     </div>
                 </div>
@@ -34,8 +34,8 @@
                     <label for="inputEmail3" class="col-sm-2 control-label">Tiêu đề SEO</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="alias" required ng-model="productCategory.alias">
-                        <span class="has-error">Phải nhập tiêu đề SEO</span>
-                        <span class="has-error">Tiêu đề SEO chỉ được 256 ký tự</span>
+                        <span ng-show="frmUpdateProductCategory.alias.$invalid"  class="has-error">Phải nhập tiêu đề SEO</span>
+                        <span ng-show="frmUpdateProductCategory.alias.$error.max" class="has-error">Tiêu đề SEO chỉ được 256 ký tự</span>
 
 
                     </div>
@@ -44,7 +44,7 @@
                     <label for="inputEmail3" class="col-sm-2 control-label">Mô tả ngắn</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="description" ng-maxlength="500" ng-model="productCategory.description">
-                        <span class="has-error">Mô tả chỉ được 500 ký tự</span>
+                        <span ng-show="frmUpdateProductCategory.description.$invalid"  class="has-error">Mô tả chỉ được 500 ký tự</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -60,14 +60,14 @@
                     <label for="inputEmail3" class="col-sm-2 control-label">Thứ tự</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" name="displayOrder" required ng-model="productCategory.displayOrder">
-                        <span class="has-error">Phải nhập thứ tự</span>
+                        <span ng-show="frmUpdateProductCategory.displayOrder.$invalid"  class="has-error">Phải nhập thứ tự</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Hình ảnh</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="image" ng-model="productCategory.image">
-                        <span class="has-error">Hình ảnh chỉ được 256 ký tự</span>
+                        <!--<span ng-show="frmUpdateProductCategory.image.$invalid"  class="has-error">Hình ảnh chỉ được 256 ký tự</span>-->
 
                     </div>
                 </div>

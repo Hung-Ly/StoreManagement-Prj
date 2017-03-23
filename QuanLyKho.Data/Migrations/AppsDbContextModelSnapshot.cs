@@ -640,6 +640,8 @@ namespace QuanLyKho.Data.Migrations
 
                     b.Property<DateTime?>("UpdatedDate");
 
+                    b.Property<bool>("isDeleted");
+
                     b.HasKey("ID");
 
                     b.ToTable("ProductCategories");

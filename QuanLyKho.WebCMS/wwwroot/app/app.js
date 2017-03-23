@@ -10,8 +10,8 @@
     // ten module chinh: app dependence [] ,  truyen vao config mot func config
     // goi dc ui.router da truyen tu app.common
     angular.module('app',
-       ['app.products',
-        'app.common',
+       ['app.common',
+        'app.products',        
         'app.product_categories']).config(config);
 
     //$stateProvider, $urlRouterProvider thuoc $urlRouterr

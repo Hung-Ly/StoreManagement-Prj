@@ -8,198 +8,217 @@
 	This spec has tests for checking that the widths of the left and right
 	segments are the correct widths and colors, based on their CSS.
  */
-describe("Low/High Track Tests", function () {
-    var unstyledID = "low-high-slider";
-    var styledID = "low-high-slider-styled";
+describe("Low/High Track Tests", function() {
 
-    var testSlider;
+	var unstyledID = "low-high-slider";
+	var styledID = "low-high-slider-styled";
 
-    describe("Single-value sliders, no styling", function () {
-        var id = unstyledID;
+	var testSlider;
 
-        beforeEach(function () {
-            testSlider = $("#testSlider1").slider({
-                id: id,
-                min: 0,
-                max: 10,
-                value: 5
-            });
-        });
+	describe("Single-value sliders, no styling", function() {
 
-        it("low track width is zero", function () {
-            var leftTrack = $("#" + id + " .slider-track-low");
-            expect($(leftTrack).css("width")).toBe("0px");
-        });
+		var id = unstyledID;
 
-        it("high track width is 50%", function () {
-            var rightTrack = $("#" + id + " .slider-track-high");
-            var trackWidth = rightTrack.parent().width();
-            expect($(rightTrack).css("width")).toBe((trackWidth / 2) + "px");
-        });
+		beforeEach(function() {
+			testSlider = $("#testSlider1").slider({
+				id: id,
+				min: 0,
+				max: 10,
+				value: 5
+			});
+		});
 
-        it("high track is transparent", function () {
-            var rightTrack = $("#" + id + " .slider-track-high");
-            var rightColor = rightTrack.css("background-color");
-            var isTransparent = rightColor.match(/rgba\([0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}, 0\)/);
-            expect(isTransparent).toBeTruthy();
-        });
+		it("low track width is zero", function()
+		{
+			var leftTrack = $("#" + id + " .slider-track-low");
+			expect($(leftTrack).css("width")).toBe("0px");
+		});
 
-        afterEach(function () {
-            if (testSlider) {
-                testSlider.slider('destroy');
-                testSlider = null;
-            }
-        });
-    });
+		it("high track width is 50%", function()
+		{
+			var rightTrack = $("#" + id + " .slider-track-high");
+			var trackWidth = rightTrack.parent().width();
+			expect($(rightTrack).css("width")).toBe((trackWidth / 2) + "px");
+		});
 
-    describe("Single-value sliders, with styling", function () {
-        var id = styledID;
+		it("high track is transparent", function()
+		{
+			var rightTrack = $("#" + id + " .slider-track-high");
+			var rightColor = rightTrack.css("background-color");
+			var isTransparent = rightColor.match(/rgba\([0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}, 0\)/);
+			expect(isTransparent).toBeTruthy();
+		});
 
-        beforeEach(function () {
-            testSlider = $("#testSlider1").slider({
-                id: id,
-                min: 0,
-                max: 10,
-                value: 5
-            });
-        });
+		afterEach(function() {
+			if(testSlider) {
+				testSlider.slider('destroy');
+				testSlider = null;
+			}
+		});
+	});
 
-        it("low track width is zero", function () {
-            var leftTrack = $("#" + id + " .slider-track-low");
-            expect($(leftTrack).css("width")).toBe("0px");
-        });
+	describe("Single-value sliders, with styling", function() {
 
-        it("high track width is 50%", function () {
-            var rightTrack = $("#" + id + " .slider-track-high");
-            var trackWidth = rightTrack.parent().width();
-            expect($(rightTrack).css("width")).toBe((trackWidth / 2) + "px");
-        });
+		var id = styledID;
 
-        it("high track is red", function () {
-            var rightTrack = $("#" + id + " .slider-track-high");
-            var rightColor = rightTrack.css("background-color");
-            expect(rightColor).toBe("rgb(255, 0, 0)");
-        });
+		beforeEach(function() {
+			testSlider = $("#testSlider1").slider({
+				id: id,
+				min: 0,
+				max: 10,
+				value: 5
+			});
+		});
 
-        afterEach(function () {
-            if (testSlider) {
-                testSlider.slider('destroy');
-                testSlider = null;
-            }
-        });
-    });
+		it("low track width is zero", function()
+		{
+			var leftTrack = $("#" + id + " .slider-track-low");
+			expect($(leftTrack).css("width")).toBe("0px");
+		});
 
-    describe("Range sliders, no styling", function () {
-        var id = unstyledID;
-        var values = {
-            min: 0,
-            max: 10,
-            values: [4, 6]
-        };
+		it("high track width is 50%", function()
+		{
+			var rightTrack = $("#" + id + " .slider-track-high");
+			var trackWidth = rightTrack.parent().width();
+			expect($(rightTrack).css("width")).toBe((trackWidth / 2) + "px");
+		});
 
-        beforeEach(function () {
-            testSlider = $("#testSlider1").slider({
-                id: id,
-                min: values.min,
-                max: values.max,
-                range: true,
-                value: values.values
-            });
-        });
+		it("high track is red", function()
+		{
+			var rightTrack = $("#" + id + " .slider-track-high");
+			var rightColor = rightTrack.css("background-color");
+			expect(rightColor).toBe("rgb(255, 0, 0)");
+		});
 
-        it("low track width is correct", function () {
-            var leftTrack = $("#" + id + " .slider-track-low");
+		afterEach(function() {
+			if(testSlider) {
+				testSlider.slider('destroy');
+				testSlider = null;
+			}
+		});
+	});
 
-            var trackWidth = leftTrack.parent().width();
-            var expectedWidth = ((values.values[0] - values.min) / (values.max - values.min)) * trackWidth;
+	describe("Range sliders, no styling", function() {
 
-            expect($(leftTrack).css("width")).toBe(expectedWidth + "px");
-        });
+		var id = unstyledID;
+		var values = {
+			min: 0,
+			max: 10,
+			values: [ 4, 6 ]
+		};
 
-        it("high track width is correct", function () {
-            var rightTrack = $("#" + id + " .slider-track-high");
-            var trackWidth = rightTrack.parent().width();
+		beforeEach(function() {
+			testSlider = $("#testSlider1").slider({
+				id: id,
+				min: values.min,
+				max: values.max,
+				range: true,
+				value: values.values
+			});
+		});
 
-            var expectedWidth = ((values.max - values.values[1]) / (values.max - values.min)) * trackWidth;
+		it("low track width is correct", function()
+		{
+			var leftTrack = $("#" + id + " .slider-track-low");
 
-            expect($(rightTrack).css("width")).toBe(expectedWidth + "px");
-        });
+			var trackWidth = leftTrack.parent().width();
+			var expectedWidth = ((values.values[0] - values.min) / (values.max - values.min)) * trackWidth;
 
-        it("low track is transparent", function () {
-            var leftTrack = $("#" + id + " .slider-track-low");
-            var leftColor = leftTrack.css("background-color");
-            var isTransparent = leftColor.match(/rgba\([0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}, 0\)/);
-            expect(isTransparent).toBeTruthy();
-        });
+			expect($(leftTrack).css("width")).toBe(expectedWidth + "px");
+		});
 
-        it("high track is transparent", function () {
-            var rightTrack = $("#" + id + " .slider-track-high");
-            var rightColor = rightTrack.css("background-color");
-            var isTransparent = rightColor.match(/rgba\([0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}, 0\)/);
-            expect(isTransparent).toBeTruthy();
-        });
+		it("high track width is correct", function()
+		{
+			var rightTrack = $("#" + id + " .slider-track-high");
+			var trackWidth = rightTrack.parent().width();
 
-        afterEach(function () {
-            if (testSlider) {
-                testSlider.slider('destroy');
-                testSlider = null;
-            }
-        });
-    });
+			var expectedWidth = ((values.max - values.values[1]) / (values.max - values.min)) * trackWidth;
 
-    describe("Range sliders, with styling", function () {
-        var id = styledID;
-        var values = {
-            min: 0,
-            max: 10,
-            values: [4, 6]
-        };
+			expect($(rightTrack).css("width")).toBe(expectedWidth + "px");
+		});
 
-        beforeEach(function () {
-            testSlider = $("#testSlider1").slider({
-                id: id,
-                min: values.min,
-                max: values.max,
-                range: true,
-                value: values.values
-            });
-        });
+		it("low track is transparent", function()
+		{
+			var leftTrack = $("#" + id + " .slider-track-low");
+			var leftColor = leftTrack.css("background-color");
+			var isTransparent = leftColor.match(/rgba\([0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}, 0\)/);
+			expect(isTransparent).toBeTruthy();
+		});
 
-        it("low track width is correct", function () {
-            var leftTrack = $("#" + id + " .slider-track-low");
+		it("high track is transparent", function()
+		{
+			var rightTrack = $("#" + id + " .slider-track-high");
+			var rightColor = rightTrack.css("background-color");
+			var isTransparent = rightColor.match(/rgba\([0-9]{1,3}, [0-9]{1,3}, [0-9]{1,3}, 0\)/);
+			expect(isTransparent).toBeTruthy();
+		});
 
-            var trackWidth = leftTrack.parent().width();
-            var expectedWidth = ((values.values[0] - values.min) / (values.max - values.min)) * trackWidth;
+		afterEach(function() {
+			if(testSlider) {
+				testSlider.slider('destroy');
+				testSlider = null;
+			}
+		});
+	});
 
-            expect($(leftTrack).css("width")).toBe(expectedWidth + "px");
-        });
+	describe("Range sliders, with styling", function() {
 
-        it("high track width is correct", function () {
-            var rightTrack = $("#" + id + " .slider-track-high");
-            var trackWidth = rightTrack.parent().width();
+		var id = styledID;
+		var values = {
+			min: 0,
+			max: 10,
+			values: [ 4, 6 ]
+		};
 
-            var expectedWidth = ((values.max - values.values[1]) / (values.max - values.min)) * trackWidth;
+		beforeEach(function() {
+			testSlider = $("#testSlider1").slider({
+				id: id,
+				min: values.min,
+				max: values.max,
+				range: true,
+				value: values.values
+			});
+		});
 
-            expect($(rightTrack).css("width")).toBe(expectedWidth + "px");
-        });
+		it("low track width is correct", function()
+		{
+			var leftTrack = $("#" + id + " .slider-track-low");
 
-        it("low track is green", function () {
-            var leftTrack = $("#" + id + " .slider-track-low");
-            var leftColor = leftTrack.css("background-color");
-            expect(leftColor).toBe("rgb(0, 255, 0)");
-        });
+			var trackWidth = leftTrack.parent().width();
+			var expectedWidth = ((values.values[0] - values.min) / (values.max - values.min)) * trackWidth;
 
-        it("high track is red", function () {
-            var rightTrack = $("#" + id + " .slider-track-high");
-            var rightColor = rightTrack.css("background-color");
-            expect(rightColor).toBe("rgb(255, 0, 0)");
-        });
+			expect($(leftTrack).css("width")).toBe(expectedWidth + "px");
+		});
 
-        afterEach(function () {
-            if (testSlider) {
-                testSlider.slider('destroy');
-                testSlider = null;
-            }
-        });
-    });
+		it("high track width is correct", function()
+		{
+			var rightTrack = $("#" + id + " .slider-track-high");
+			var trackWidth = rightTrack.parent().width();
+
+			var expectedWidth = ((values.max - values.values[1]) / (values.max - values.min)) * trackWidth;
+
+			expect($(rightTrack).css("width")).toBe(expectedWidth + "px");
+		});
+
+		it("low track is green", function()
+		{
+			var leftTrack = $("#" + id + " .slider-track-low");
+			var leftColor = leftTrack.css("background-color");
+			expect(leftColor).toBe("rgb(0, 255, 0)");
+		});
+
+		it("high track is red", function()
+		{
+			var rightTrack = $("#" + id + " .slider-track-high");
+			var rightColor = rightTrack.css("background-color");
+			expect(rightColor).toBe("rgb(255, 0, 0)");
+		});
+
+		afterEach(function() {
+			if(testSlider) {
+				testSlider.slider('destroy');
+				testSlider = null;
+			}
+		});
+	});
 });

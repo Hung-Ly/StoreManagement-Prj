@@ -4,6 +4,7 @@ define( [
 	"../data/var/dataPriv",
 	"../core/init"
 ], function( jQuery, rnotwhite, dataPriv ) {
+
 var rclass = /[\t\r\n\f]/g;
 
 function getClass( elem ) {
@@ -76,6 +77,7 @@ jQuery.fn.extend( {
 				if ( cur ) {
 					j = 0;
 					while ( ( clazz = classes[ j++ ] ) ) {
+
 						// Remove *all* instances
 						while ( cur.indexOf( " " + clazz + " " ) > -1 ) {
 							cur = cur.replace( " " + clazz + " ", " " );
@@ -114,12 +116,14 @@ jQuery.fn.extend( {
 			var className, i, self, classNames;
 
 			if ( type === "string" ) {
+
 				// Toggle individual class names
 				i = 0;
 				self = jQuery( this );
 				classNames = value.match( rnotwhite ) || [];
 
 				while ( ( className = classNames[ i++ ] ) ) {
+
 					// Check each className given, space separated list
 					if ( self.hasClass( className ) ) {
 						self.removeClass( className );
@@ -132,6 +136,7 @@ jQuery.fn.extend( {
 			} else if ( value === undefined || type === "boolean" ) {
 				className = getClass( this );
 				if ( className ) {
+
 					// Store className if set
 					dataPriv.set( this, "__className__", className );
 				}
@@ -168,4 +173,5 @@ jQuery.fn.extend( {
 		return false;
 	}
 } );
+
 } );

@@ -54,7 +54,6 @@ namespace QuanLyKho.Model.Entities
 
         [ForeignKey("CategoryID")]
         public virtual ProductCategory ProductCategory { get; set; }
-
         public virtual IEnumerable<ProductTag> ProductTags { get; set; }
     }
 }

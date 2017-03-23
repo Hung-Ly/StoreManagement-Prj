@@ -40,6 +40,7 @@ namespace QuanLyKho.WebCMS.Models
 
         [Required(ErrorMessage = "Yêu cầu nhập trạng thái")]
         public bool Status { set; get; }
+        public bool isDeleted { get; set; }
 
         public static implicit operator ProductCategoryViewModel(ProductCategory v)
         {

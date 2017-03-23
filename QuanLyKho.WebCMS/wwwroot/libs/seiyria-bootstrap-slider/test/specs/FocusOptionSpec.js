@@ -9,6 +9,7 @@
 */
 
 describe("Focus Option Tests", function() {
+
   var testSlider;
 
   var simulateMousedown = function(target, pos) {

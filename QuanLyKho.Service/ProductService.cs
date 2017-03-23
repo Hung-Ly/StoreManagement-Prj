@@ -1,6 +1,4 @@
-﻿//tag.Type = CommonConstants.ProductTag;
-
-using QuanLyKho.Common;
+﻿using QuanLyKho.Common;
 using QuanLyKho.Data.Infrastructure;
 using QuanLyKho.Data.Repositories;
 using QuanLyKho.Model.Entities;
@@ -69,7 +67,7 @@ namespace QuanLyKho.Service
         {
             _productRepository.Add(Product);
 
-            _unitOfWork.Commit();
+            //_unitOfWork.Commit();
 
             if (!string.IsNullOrEmpty(Product.Tags))
             {
@@ -122,6 +120,7 @@ namespace QuanLyKho.Service
 
         public void Save()
         {
+            _productRepository.Commit();
             _unitOfWork.Commit();
         }
 

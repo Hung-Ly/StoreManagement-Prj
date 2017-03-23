@@ -28,6 +28,18 @@ namespace QuanLyKho.Data
                      new ProductCategory() { Name="Văn phòng phẩm",Alias="van-phong-pham",Status=true, CreatedDate=DateTime.Now }
             };
 
+            var listProduct = new List<Product>()
+            {
+                new Product() { Name="Điện lạnh",Alias="dien-lanh",Status=true,OriginalPrice=1000,Price=2000,CategoryID=1,Quantity=10, CreatedDate=DateTime.Now },
+                 new Product() { Name="Viễn thông",Alias="vien-thong",Status=false,OriginalPrice=1000,Price=2000,CategoryID=1,Quantity=10, CreatedDate=DateTime.Now },
+                  new Product() { Name="Đồ gia dụng",Alias="do-gia-dung",Status=true,OriginalPrice=1000,Price=2000,CategoryID=1,Quantity=10, CreatedDate=DateTime.Now },
+                   new Product() { Name="Mỹ phẩm",Alias="my-pham",Status=true, OriginalPrice=1000,Price=2000,CategoryID=1,Quantity=10, CreatedDate=DateTime.Now },
+                    new Product() { Name="Nội thất",Alias="noi-that",Status=false,OriginalPrice=1000,Price=2000,CategoryID=1,Quantity=10, CreatedDate=DateTime.Now },
+                      new Product() { Name="Thức ăn nhanh",Alias="thuc-an-nhanh",Status=true,OriginalPrice=1000,Price=2000,CategoryID=1, Quantity=10, CreatedDate=DateTime.Now },
+                        new Product() { Name="Văn phòng phẩm",Alias="van-phong-pham",Status=true, OriginalPrice=1000,Price=2000,CategoryID=1,Quantity=10, CreatedDate=DateTime.Now }
+            };
+            context.Products.AddRange(listProduct);
+
             context.ProductCategories.AddRange(listProductCategory);
             context.SaveChanges();
         }

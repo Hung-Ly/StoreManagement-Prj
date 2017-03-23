@@ -1,34 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using QuanLyKho.Data;
 using QuanLyKho.Model.Entities;
 using QuanLyKho.Service;
 using QuanLyKho.WebCMS.Infrastructure.Extenssions;
 using QuanLyKho.WebCMS.Infrastructure.Responses;
 using QuanLyKho.WebCMS.Models;
 
+// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace QuanLyKho.WebCMS.Api
+namespace QuanLyKho.WebCMS.api
 {
     [Route("api/productcategories")]
-    //[Authorize]
     public class ProductCategoryController : Controller
     {
         #region Initialize
 
         private IProductCategoryService _productCategoryService;
-        private AppsDbContext _appsDbContext;
 
-        public ProductCategoryController(IProductCategoryService productCategoryService,
-            AppsDbContext appsDbContext)
+        public ProductCategoryController(IProductCategoryService productCategoryService)
 
         {
             this._productCategoryService = productCategoryService;
-            this._appsDbContext = appsDbContext;
         }
 
         #endregion Initialize
@@ -39,7 +35,7 @@ namespace QuanLyKho.WebCMS.Api
         {
             var model = _productCategoryService.GetAll();
             int totalRow = model.Count();
-           
+
             var responseData = Mapper.Map<IEnumerable<ProductCategoryViewModel>>(model);
 
             var response = new ListModelResponse<ProductCategoryViewModel>() as IListModelResponse<ProductCategoryViewModel>;
@@ -59,7 +55,7 @@ namespace QuanLyKho.WebCMS.Api
 
         [Route("getall")]
         [HttpGet]
-        public IActionResult GetAll( int page, string keyword,int pageSize = 3 )
+        public IActionResult GetAll(int page, string keyword, int pageSize = 3)
         {
             var model = _productCategoryService.GetAll(keyword);
             int totalRow = model.Count();
@@ -72,8 +68,8 @@ namespace QuanLyKho.WebCMS.Api
             {
                 response.TotalRows = totalRow;
                 //rows per page
-                response.PageSize = query.Count();             
-                response.PageNumber = page;                
+                response.PageSize = query.Count();
+                response.PageNumber = page;
                 response.TotalPages = (int)Math.Ceiling((double)totalRow / pageSize);
                 response.Model = responseData;
 
@@ -106,7 +102,7 @@ namespace QuanLyKho.WebCMS.Api
                 response.Model = responseData;
                 response.Message = productCategoryVm.Name + " đã được thêm thành công";
             }
-            catch (Exception ex)    
+            catch (Exception ex)
             {
                 response.DidError = true;
                 response.ErrorMessage = ex.ToString();
@@ -189,7 +185,7 @@ namespace QuanLyKho.WebCMS.Api
 
         [Route("deletemulti")]
         [HttpDelete]
-        public IActionResult DeleteMulti(int [] listIDProductCategory)
+        public IActionResult DeleteMulti(int[] listIDProductCategory)
         {
             var response = new ListModelResponse<ProductCategoryViewModel>() as IListModelResponse<ProductCategoryViewModel>;
             try
@@ -211,7 +207,6 @@ namespace QuanLyKho.WebCMS.Api
             }
 
             return response.ToHttpResponse();
-        }
-
+        } 
     }
 }

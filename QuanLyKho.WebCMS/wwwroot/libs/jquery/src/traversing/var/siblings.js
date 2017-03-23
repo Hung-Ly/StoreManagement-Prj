@@ -1,13 +1,15 @@
-define(function () {
-    return function (n, elem) {
-        var matched = [];
+define( function() {
 
-        for (; n; n = n.nextSibling) {
-            if (n.nodeType === 1 && n !== elem) {
-                matched.push(n);
-            }
-        }
+return function( n, elem ) {
+	var matched = [];
 
-        return matched;
-    };
-});
+	for ( ; n; n = n.nextSibling ) {
+		if ( n.nodeType === 1 && n !== elem ) {
+			matched.push( n );
+		}
+	}
+
+	return matched;
+};
+
+} );
